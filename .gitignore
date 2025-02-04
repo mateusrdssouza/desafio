@@ -1,0 +1,14 @@
+# Compiled output
+backend/dist
+backend/node_modules
+backend/build
+
+# OS
+backend/.DS_Store
+
+# Dotenv
+backend/.env
+
+# Temp
+backend/.temp
+backend/.tmp
