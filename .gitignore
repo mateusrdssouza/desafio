@@ -1,3 +1,5 @@
+######### Backend #########
+
 # Compiled output
 backend/dist
 backend/node_modules
@@ -12,3 +14,39 @@ backend/.env
 # Temp
 backend/.temp
 backend/.tmp
+
+######### Frontend #########
+
+# Dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+frontend/!.yarn/patches
+frontend/!.yarn/plugins
+frontend/!.yarn/releases
+frontend/!.yarn/versions
+
+# Testing
+frontend/coverage
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Production
+frontend/build
+
+# Misc
+frontend/.DS_Store
+frontend/*.pem
+
+# Dotenv
+frontend/.env*
+
+# Vercel
+frontend/.vercel
+
+# Typescript
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
