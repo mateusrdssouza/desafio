@@ -1,5 +1,5 @@
 # Node.js image
-FROM node:22-alpine
+FROM node:22
 
 # App directory
 WORKDIR /app/frontend
