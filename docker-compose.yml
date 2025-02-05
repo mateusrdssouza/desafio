@@ -11,7 +11,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgres://admin:a7Xr9jD2qW5zP8mT@db:5432/database
+      - DATABASE_URL=postgresql://admin:a7Xr9jD2qW5zP8mT@localhost:5432/database
     depends_on:
       - db
     networks:
