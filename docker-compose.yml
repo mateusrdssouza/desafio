@@ -10,8 +10,6 @@ services:
       - ./backend:/app/backend
     ports:
       - "3000:3000"
-    environment:
-      - DATABASE_URL=postgresql://admin:a7Xr9jD2qW5zP8mT@localhost:5432/database
     depends_on:
       - db
     networks:
