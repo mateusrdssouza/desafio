@@ -27,14 +27,15 @@ model User {
 }
 
 model Wallet {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @map("user_id")
-  name      String
-  balance   Float     @default(0)
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-  user      User      @relation(fields: [userId], references: [id])
+  id         Int          @id @default(autoincrement())
+  userId     Int          @map("user_id")
+  name       String
+  balance    Float        @default(0)
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  deletedAt  DateTime?    @map("deleted_at")
+  user       User         @relation(fields: [userId], references: [id])
+  Investment Investment[]
 
   @@map("wallets")
 }
@@ -52,8 +53,24 @@ model Company {
   createdAt            DateTime        @default(now()) @map("created_at")
   updatedAt            DateTime        @updatedAt @map("updated_at")
   deletedAt            DateTime?       @map("deleted_at")
+  Investment           Investment[]
 
   @@map("companies")
+}
+
+model Investment {
+  id        Int       @id @default(autoincrement())
+  walletId  Int       @map("wallet_id")
+  companyId Int       @map("company_id")
+  shares    Int
+  amount    Float
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+  wallet    Wallet    @relation(fields: [walletId], references: [id])
+  company   Company   @relation(fields: [companyId], references: [id])
+
+  @@map("investments")
 }
 
 enum MarketRiskLevel {
