@@ -4,6 +4,7 @@ CREATE TYPE "MarketRiskLevel" AS ENUM ('LOW', 'MEDIUM', 'HIGH');
 -- CreateTable
 CREATE TABLE "companies" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "sector" TEXT NOT NULL,
@@ -18,6 +19,9 @@ CREATE TABLE "companies" (
 
     CONSTRAINT "companies_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "companies_uuid_key" ON "companies"("uuid");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "companies_ticker_key" ON "companies"("ticker");

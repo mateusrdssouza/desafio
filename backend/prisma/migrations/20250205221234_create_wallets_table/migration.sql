@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "wallets" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "user_id" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "balance" DOUBLE PRECISION NOT NULL DEFAULT 0,
@@ -10,6 +11,9 @@ CREATE TABLE "wallets" (
 
     CONSTRAINT "wallets_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "wallets_uuid_key" ON "wallets"("uuid");
 
 -- AddForeignKey
 ALTER TABLE "wallets" ADD CONSTRAINT "wallets_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

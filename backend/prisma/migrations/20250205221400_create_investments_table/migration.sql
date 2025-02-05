@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "investments" (
     "id" SERIAL NOT NULL,
+    "uuid" TEXT NOT NULL,
     "wallet_id" INTEGER NOT NULL,
     "company_id" INTEGER NOT NULL,
     "shares" INTEGER NOT NULL,
@@ -11,6 +12,9 @@ CREATE TABLE "investments" (
 
     CONSTRAINT "investments_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "investments_uuid_key" ON "investments"("uuid");
 
 -- AddForeignKey
 ALTER TABLE "investments" ADD CONSTRAINT "investments_wallet_id_fkey" FOREIGN KEY ("wallet_id") REFERENCES "wallets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
