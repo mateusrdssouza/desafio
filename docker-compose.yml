@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: backend
+    volumes:
+      - ./backend:/app/backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://admin:a7Xr9jD2qW5zP8mT@db:5432/database
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend:/app/frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  db:
+    image: postgres:17.2-alpine3.21
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: a7Xr9jD2qW5zP8mT
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

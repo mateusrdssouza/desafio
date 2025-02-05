@@ -42,7 +42,7 @@ frontend/.DS_Store
 frontend/*.pem
 
 # Dotenv
-frontend/.env*
+frontend/.env
 
 # Vercel
 frontend/.vercel
