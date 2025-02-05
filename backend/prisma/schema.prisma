@@ -24,3 +24,26 @@ model User {
 
   @@map("users")
 }
+
+model Company {
+  id                   Int             @id @default(autoincrement())
+  name                 String
+  description          String
+  sector               String
+  ticker               String          @unique
+  stockExchange        String          @map("stock_exchange")
+  marketCapitalization Float           @map("market_capitalization")
+  marketRiskLevel      MarketRiskLevel @map("market_risk_level")
+  logoUrl              String          @map("logo_url")
+  createdAt            DateTime        @default(now()) @map("created_at")
+  updatedAt            DateTime        @updatedAt @map("updated_at")
+  deletedAt            DateTime?       @map("deleted_at")
+
+  @@map("companies")
+}
+
+enum MarketRiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
