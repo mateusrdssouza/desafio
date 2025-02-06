@@ -29,7 +29,15 @@ export class WalletsService {
     }
   }
 
-  async findByUuid(user: User, uuid: string): Promise<Wallet> {
+  async findAll(user: User): Promise<Wallet[]> {
+    try {
+      return await this.walletsRepository.findAll(user.uuid);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOne(user: User, uuid: string): Promise<Wallet> {
     try {
       const wallet = await this.walletsRepository.findByUuid(user.uuid, uuid);
 

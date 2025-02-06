@@ -41,6 +41,23 @@ export class WalletsController {
     }
   }
 
+  @Get()
+  async findAll(@Request() req: AuthRequest): Promise<FindWalletDto[]> {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException('Acesso não autorizado');
+      }
+
+      const wallets = await this.walletsService.findAll(req.user);
+
+      return wallets.map((wallet) => transformToDto(FindWalletDto, wallet));
+    } catch (error) {
+      throw new BadRequestException(
+        error?.message || 'Erro ao listar as carteiras',
+      );
+    }
+  }
+
   @Get(':uuid')
   async find(
     @Param('uuid') uuid: string,
@@ -51,7 +68,7 @@ export class WalletsController {
         throw new UnauthorizedException('Acesso não autorizado');
       }
 
-      const wallet = await this.walletsService.findByUuid(req.user, uuid);
+      const wallet = await this.walletsService.findOne(req.user, uuid);
 
       return transformToDto(FindWalletDto, wallet);
     } catch (error) {
