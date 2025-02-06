@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateInvestmentDto } from 'src/modules/investments/dto/create-investment.dto';
+import { UpdateInvestmentDto } from 'src/modules/investments/dto/update-investment.dto';
 import { Investment } from 'src/modules/investments/entities/investment.entity';
 import { InvestmentsRepository } from '../investments-repository';
 
@@ -30,6 +31,20 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
         company: { uuid: companyUuid },
         deletedAt: null,
       },
+    });
+  }
+
+  async update(uuid: string, data: UpdateInvestmentDto): Promise<Investment> {
+    const { walletUuid, companyUuid, ...fields } = data;
+
+    return await this.prismaService.investment.update({
+      where: {
+        uuid,
+        wallet: { uuid: walletUuid },
+        company: { uuid: companyUuid },
+        deletedAt: null,
+      },
+      data: { ...fields },
     });
   }
 }

@@ -1,12 +1,9 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InvestmentsRepository } from 'src/repositories/investments-repository';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
+import { UpdateInvestmentDto } from './dto/update-investment.dto';
 
 @Injectable()
 export class InvestmentsService {
@@ -29,18 +26,23 @@ export class InvestmentsService {
         throw new NotFoundException('Carteira não encontrada');
       }
 
-      const investmentByWallet = await this.investmentsRepository.findByWallet(
+      const investment = await this.investmentsRepository.findByWallet(
         data.walletUuid,
         data.companyUuid,
       );
 
-      if (investmentByWallet) {
-        throw new ConflictException(
-          'Já foi feito um investimento nessa empresa',
-        );
-      }
+      if (investment) {
+        const updatedData: UpdateInvestmentDto = {
+          walletUuid: data.walletUuid,
+          companyUuid: data.companyUuid,
+          shares: investment.shares + data.shares,
+          amount: investment.amount + data.amount,
+        };
 
-      await this.investmentsRepository.create(data);
+        await this.investmentsRepository.update(investment.uuid, updatedData);
+      } else {
+        await this.investmentsRepository.create(data);
+      }
 
       return {
         message: 'Investimento realizado com sucesso',
