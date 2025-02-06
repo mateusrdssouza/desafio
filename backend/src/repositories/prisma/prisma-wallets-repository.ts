@@ -16,7 +16,14 @@ export class PrismaWalletsRepository implements WalletsRepository {
 
   async findByName(userUuid: string, name: string): Promise<Wallet | null> {
     return await this.prismaService.wallet.findFirst({
-      where: { name: name, user: { uuid: userUuid } },
+      where: { name, user: { uuid: userUuid } },
+      include: { user: true },
+    });
+  }
+
+  async findByUuid(userUuid: string, uuid: string): Promise<Wallet | null> {
+    return await this.prismaService.wallet.findFirst({
+      where: { uuid, user: { uuid: userUuid } },
       include: { user: true },
     });
   }

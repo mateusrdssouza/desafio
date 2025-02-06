@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
+  Param,
   Post,
   Request,
   UnauthorizedException,
@@ -35,6 +37,26 @@ export class WalletsController {
     } catch (error) {
       throw new BadRequestException(
         error?.message || 'Erro ao criar a carteira',
+      );
+    }
+  }
+
+  @Get(':uuid')
+  async find(
+    @Param('uuid') uuid: string,
+    @Request() req: AuthRequest,
+  ): Promise<FindWalletDto> {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException('Acesso não autorizado');
+      }
+
+      const wallet = await this.walletsService.findByUuid(req.user, uuid);
+
+      return transformToDto(FindWalletDto, wallet);
+    } catch (error) {
+      throw new BadRequestException(
+        error?.message || 'Erro ao buscar a carteira',
       );
     }
   }

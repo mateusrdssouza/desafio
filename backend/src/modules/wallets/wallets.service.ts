@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
@@ -20,6 +24,20 @@ export class WalletsService {
       }
 
       return await this.walletsRepository.create(user.uuid, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findByUuid(user: User, uuid: string): Promise<Wallet> {
+    try {
+      const wallet = await this.walletsRepository.findByUuid(user.uuid, uuid);
+
+      if (!wallet) {
+        throw new NotFoundException('Carteira não encontrada');
+      }
+
+      return wallet;
     } catch (error) {
       throw error;
     }
