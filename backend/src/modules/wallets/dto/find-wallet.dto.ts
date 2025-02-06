@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { FindInvestmentDto } from 'src/modules/investments/dto/find-investment.dto';
 
 export class FindWalletDto {
   @Expose()
@@ -15,4 +16,8 @@ export class FindWalletDto {
 
   @Expose()
   updatedAt: Date;
+
+  @Expose()
+  @Type(() => FindInvestmentDto)
+  investments?: FindInvestmentDto[];
 }

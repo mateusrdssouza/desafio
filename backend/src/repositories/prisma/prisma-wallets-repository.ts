@@ -18,18 +18,21 @@ export class PrismaWalletsRepository implements WalletsRepository {
   async findAll(userUuid: string): Promise<Wallet[]> {
     return await this.prismaService.wallet.findMany({
       where: { user: { uuid: userUuid }, deletedAt: null },
+      include: { investments: true },
     });
   }
 
   async findByName(userUuid: string, name: string): Promise<Wallet | null> {
     return await this.prismaService.wallet.findFirst({
       where: { name, user: { uuid: userUuid }, deletedAt: null },
+      include: { investments: true },
     });
   }
 
   async findByUuid(userUuid: string, uuid: string): Promise<Wallet | null> {
     return await this.prismaService.wallet.findFirst({
       where: { uuid, user: { uuid: userUuid }, deletedAt: null },
+      include: { investments: true },
     });
   }
 
