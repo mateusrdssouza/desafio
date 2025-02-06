@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Request,
   UnauthorizedException,
@@ -12,6 +13,7 @@ import { AuthRequest } from 'src/common/interfaces/auth-request.interface';
 import { transformToDto } from 'src/utils/transform';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { FindWalletDto } from './dto/find-wallet.dto';
+import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { WalletsService } from './wallets.service';
 
 @Controller('wallets')
@@ -74,6 +76,31 @@ export class WalletsController {
     } catch (error) {
       throw new BadRequestException(
         error?.message || 'Erro ao buscar a carteira',
+      );
+    }
+  }
+
+  @Patch(':uuid')
+  async update(
+    @Param('uuid') uuid: string,
+    @Body() updateWalletDto: UpdateWalletDto,
+    @Request() req: AuthRequest,
+  ): Promise<FindWalletDto> {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException('Acesso não autorizado');
+      }
+
+      const wallet = await this.walletsService.update(
+        req.user,
+        uuid,
+        updateWalletDto,
+      );
+
+      return transformToDto(FindWalletDto, wallet);
+    } catch (error) {
+      throw new BadRequestException(
+        error?.message || 'Erro ao atualizar a carteira',
       );
     }
   }

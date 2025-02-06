@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateWalletDto } from 'src/modules/wallets/dto/create-wallet.dto';
+import { UpdateWalletDto } from 'src/modules/wallets/dto/update-wallet.dto';
 import { Wallet } from 'src/modules/wallets/entities/wallet.entity';
 import { WalletsRepository } from '../wallets-repository';
 
@@ -32,6 +33,17 @@ export class PrismaWalletsRepository implements WalletsRepository {
     return await this.prismaService.wallet.findFirst({
       where: { uuid, user: { uuid: userUuid }, deletedAt: null },
       include: { user: true },
+    });
+  }
+
+  async update(
+    userUuid: string,
+    uuid: string,
+    data: UpdateWalletDto,
+  ): Promise<Wallet> {
+    return await this.prismaService.wallet.update({
+      where: { uuid, user: { uuid: userUuid }, deletedAt: null },
+      data: { ...data },
     });
   }
 }
