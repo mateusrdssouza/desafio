@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
+  Param,
   Post,
   Request,
   UnauthorizedException,
@@ -31,7 +33,29 @@ export class InvestmentsController {
       };
     } catch (error) {
       throw new BadRequestException(
-        error?.message || 'Erro ao criar a carteira',
+        error?.message || 'Erro ao criar o investimento',
+      );
+    }
+  }
+
+  @Delete(':uuid')
+  async remove(
+    @Param('uuid') uuid: string,
+    @Request() req: AuthRequest,
+  ): Promise<{ message: string }> {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException('Acesso não autorizado');
+      }
+
+      await this.investmentsService.delete(req.user, uuid);
+
+      return {
+        message: 'Investimento excluído com sucesso',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.message || 'Erro ao excluir o investimento',
       );
     }
   }

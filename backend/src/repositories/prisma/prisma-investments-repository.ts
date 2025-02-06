@@ -21,6 +21,12 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
     });
   }
 
+  async findByUuid(userUuid: string, uuid: string): Promise<Investment | null> {
+    return await this.prismaService.investment.findFirst({
+      where: { uuid, wallet: { user: { uuid: userUuid } }, deletedAt: null },
+    });
+  }
+
   async findByWallet(
     walletUuid: string,
     companyUuid: string,
@@ -45,6 +51,13 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
         deletedAt: null,
       },
       data: { ...fields },
+    });
+  }
+
+  async delete(userUuid: string, uuid: string): Promise<Investment> {
+    return await this.prismaService.investment.update({
+      where: { uuid, wallet: { user: { uuid: userUuid } }, deletedAt: null },
+      data: { deletedAt: new Date() },
     });
   }
 }

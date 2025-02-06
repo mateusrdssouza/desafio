@@ -4,6 +4,7 @@ import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
 import { UpdateInvestmentDto } from './dto/update-investment.dto';
+import { Investment } from './entities/investment.entity';
 
 @Injectable()
 export class InvestmentsService {
@@ -47,6 +48,23 @@ export class InvestmentsService {
       return {
         message: 'Investimento realizado com sucesso',
       };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete(user: User, uuid: string): Promise<Investment> {
+    try {
+      const investment = await this.investmentsRepository.findByUuid(
+        user.uuid,
+        uuid,
+      );
+
+      if (!investment) {
+        throw new NotFoundException('Investimento não encontrado');
+      }
+
+      return await this.investmentsRepository.delete(user.uuid, uuid);
     } catch (error) {
       throw error;
     }
