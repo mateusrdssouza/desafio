@@ -1,5 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InvestmentsRepository } from 'src/repositories/investments-repository';
+import { UsersRepository } from 'src/repositories/users-repository';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
@@ -11,6 +16,7 @@ export class InvestmentsService {
   constructor(
     private readonly investmentsRepository: InvestmentsRepository,
     private readonly walletsRepository: WalletsRepository,
+    private readonly usersRepository: UsersRepository,
   ) {}
 
   async create(
@@ -25,6 +31,16 @@ export class InvestmentsService {
 
       if (!wallet) {
         throw new NotFoundException('Carteira não encontrada');
+      }
+
+      const search = await this.usersRepository.findByUuid(user.uuid);
+
+      if (!search) {
+        throw new NotFoundException('Usuário não encontrado');
+      }
+
+      if (data.amount > search.balance) {
+        throw new ConflictException('Saldo insuficiente');
       }
 
       const investment = await this.investmentsRepository.findByWallet(
@@ -45,6 +61,10 @@ export class InvestmentsService {
         await this.investmentsRepository.create(data);
       }
 
+      const balance = search.balance - data.amount;
+
+      await this.usersRepository.update(user.uuid, { balance });
+
       return {
         message: 'Investimento realizado com sucesso',
       };
@@ -63,6 +83,16 @@ export class InvestmentsService {
       if (!investment) {
         throw new NotFoundException('Investimento não encontrado');
       }
+
+      const search = await this.usersRepository.findByUuid(user.uuid);
+
+      if (!search) {
+        throw new NotFoundException('Usuário não encontrado');
+      }
+
+      const balance = search.balance + investment.amount;
+
+      await this.usersRepository.update(user.uuid, { balance });
 
       return await this.investmentsRepository.delete(user.uuid, uuid);
     } catch (error) {
