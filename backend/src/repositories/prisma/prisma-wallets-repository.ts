@@ -1,0 +1,23 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/prisma.service';
+import { CreateWalletDto } from 'src/modules/wallets/dto/create-wallet.dto';
+import { Wallet } from 'src/modules/wallets/entities/wallet.entity';
+import { WalletsRepository } from '../wallets-repository';
+
+@Injectable()
+export class PrismaWalletsRepository implements WalletsRepository {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async create(userUuid: string, data: CreateWalletDto): Promise<Wallet> {
+    return await this.prismaService.wallet.create({
+      data: { ...data, user: { connect: { uuid: userUuid } } },
+    });
+  }
+
+  async findByName(userUuid: string, name: string): Promise<Wallet | null> {
+    return await this.prismaService.wallet.findFirst({
+      where: { name: name, user: { uuid: userUuid } },
+      include: { user: true },
+    });
+  }
+}
