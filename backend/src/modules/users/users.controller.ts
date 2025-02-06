@@ -30,7 +30,7 @@ export class UsersController {
   @Get(':uuid')
   async find(@Param('uuid') uuid: string): Promise<FindUserDto> {
     try {
-      const user = await this.usersService.find(uuid);
+      const user = await this.usersService.findByUuid(uuid);
       return transformToDto(FindUserDto, user);
     } catch (error) {
       throw new BadRequestException(
