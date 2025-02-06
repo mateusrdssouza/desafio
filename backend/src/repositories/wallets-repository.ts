@@ -12,4 +12,5 @@ export abstract class WalletsRepository {
     uuid: string,
     data: UpdateWalletDto,
   ): Promise<Wallet>;
+  abstract delete(userUuid: string, uuid: string): Promise<Wallet>;
 }

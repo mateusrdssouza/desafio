@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -24,18 +25,17 @@ export class WalletsController {
   async create(
     @Body() createWalletDto: CreateWalletDto,
     @Request() req: AuthRequest,
-  ): Promise<FindWalletDto> {
+  ): Promise<{ message: string }> {
     try {
       if (!req.user) {
         throw new UnauthorizedException('Acesso não autorizado');
       }
 
-      const wallet = await this.walletsService.create(
-        req.user,
-        createWalletDto,
-      );
+      await this.walletsService.create(req.user, createWalletDto);
 
-      return transformToDto(FindWalletDto, wallet);
+      return {
+        message: 'Carteira cadastrada com sucesso',
+      };
     } catch (error) {
       throw new BadRequestException(
         error?.message || 'Erro ao criar a carteira',
@@ -101,6 +101,28 @@ export class WalletsController {
     } catch (error) {
       throw new BadRequestException(
         error?.message || 'Erro ao atualizar a carteira',
+      );
+    }
+  }
+
+  @Delete(':uuid')
+  async remove(
+    @Param('uuid') uuid: string,
+    @Request() req: AuthRequest,
+  ): Promise<{ message: string }> {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException('Acesso não autorizado');
+      }
+
+      await this.walletsService.delete(req.user, uuid);
+
+      return {
+        message: 'Carteira excluída com sucesso',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.message || 'Erro ao excluir a carteira',
       );
     }
   }

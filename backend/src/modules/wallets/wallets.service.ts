@@ -78,4 +78,18 @@ export class WalletsService {
       throw error;
     }
   }
+
+  async delete(user: User, uuid: string): Promise<Wallet> {
+    try {
+      const wallet = await this.walletsRepository.findByUuid(user.uuid, uuid);
+
+      if (!wallet) {
+        throw new NotFoundException('Carteira não encontrada');
+      }
+
+      return await this.walletsRepository.delete(user.uuid, uuid);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
