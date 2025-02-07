@@ -14,6 +14,7 @@ async function main() {
         sector: 'Tecnologia',
         ticker: 'AAPL',
         stockExchange: 'NASDAQ',
+        stockPrice: 14560,
         marketCapitalization: 2500000000000,
         marketRiskLevel: 'HIGH',
         logoUrl:
@@ -27,6 +28,7 @@ async function main() {
         sector: 'Tecnologia',
         ticker: 'MSFT',
         stockExchange: 'NASDAQ',
+        stockPrice: 30210,
         marketCapitalization: 2200000000000,
         marketRiskLevel: 'LOW',
         logoUrl:
@@ -39,6 +41,7 @@ async function main() {
         sector: 'Varejo',
         ticker: 'AMZN',
         stockExchange: 'NASDAQ',
+        stockPrice: 13320,
         marketCapitalization: 1700000000000,
         marketRiskLevel: 'MEDIUM',
         logoUrl:
@@ -52,6 +55,7 @@ async function main() {
         sector: 'Tecnologia',
         ticker: 'META',
         stockExchange: 'NASDAQ',
+        stockPrice: 12050,
         marketCapitalization: 600000000000,
         marketRiskLevel: 'MEDIUM',
         logoUrl:
@@ -64,6 +68,7 @@ async function main() {
         sector: 'Entretenimento',
         ticker: 'NFLX',
         stockExchange: 'NASDAQ',
+        stockPrice: 34030,
         marketCapitalization: 200000000000,
         marketRiskLevel: 'HIGH',
         logoUrl:
@@ -77,6 +82,7 @@ async function main() {
         sector: 'Tecnologia',
         ticker: 'NVDA',
         stockExchange: 'NASDAQ',
+        stockPrice: 48075,
         marketCapitalization: 900000000000,
         marketRiskLevel: 'LOW',
         logoUrl:

@@ -1,11 +1,11 @@
 -- CreateTable
 CREATE TABLE "investments" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "uuid" TEXT NOT NULL,
-    "wallet_id" INTEGER NOT NULL,
-    "company_id" INTEGER NOT NULL,
-    "shares" INTEGER NOT NULL,
-    "amount" DOUBLE PRECISION NOT NULL,
+    "wallet_id" BIGINT NOT NULL,
+    "company_id" BIGINT NOT NULL,
+    "shares" BIGINT NOT NULL,
+    "amount" BIGINT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),

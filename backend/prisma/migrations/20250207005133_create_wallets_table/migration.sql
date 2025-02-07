@@ -1,10 +1,10 @@
 -- CreateTable
 CREATE TABLE "wallets" (
-    "id" SERIAL NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "uuid" TEXT NOT NULL,
-    "user_id" INTEGER NOT NULL,
+    "user_id" BIGINT NOT NULL,
     "name" TEXT NOT NULL,
-    "balance" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "balance" BIGINT NOT NULL DEFAULT 0,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),

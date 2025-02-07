@@ -14,11 +14,11 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        BigInt    @id @default(autoincrement())
   uuid      String    @unique @default(uuid())
   name      String
   email     String    @unique
-  balance   Float     @default(0)
+  balance   BigInt    @default(0)
   password  String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
@@ -29,11 +29,11 @@ model User {
 }
 
 model Wallet {
-  id          Int          @id @default(autoincrement())
+  id          BigInt       @id @default(autoincrement())
   uuid        String       @unique @default(uuid())
-  userId      Int          @map("user_id")
+  userId      BigInt       @map("user_id")
   name        String
-  balance     Float        @default(0)
+  balance     BigInt       @default(0)
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
   deletedAt   DateTime?    @map("deleted_at")
@@ -44,14 +44,15 @@ model Wallet {
 }
 
 model Company {
-  id                   Int             @id @default(autoincrement())
+  id                   BigInt          @id @default(autoincrement())
   uuid                 String          @unique @default(uuid())
   name                 String
   description          String
   sector               String
   ticker               String          @unique
   stockExchange        String          @map("stock_exchange")
-  marketCapitalization Float           @map("market_capitalization")
+  stockPrice           BigInt          @map("stock_price")
+  marketCapitalization BigInt          @map("market_capitalization")
   marketRiskLevel      MarketRiskLevel @map("market_risk_level")
   logoUrl              String          @map("logo_url")
   createdAt            DateTime        @default(now()) @map("created_at")
@@ -63,12 +64,12 @@ model Company {
 }
 
 model Investment {
-  id        Int       @id @default(autoincrement())
+  id        BigInt    @id @default(autoincrement())
   uuid      String    @unique @default(uuid())
-  walletId  Int       @map("wallet_id")
-  companyId Int       @map("company_id")
-  shares    Int
-  amount    Float
+  walletId  BigInt    @map("wallet_id")
+  companyId BigInt    @map("company_id")
+  shares    BigInt
+  amount    BigInt
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
