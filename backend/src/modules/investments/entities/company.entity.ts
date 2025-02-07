@@ -1,5 +1,4 @@
 export class Company {
-  id: number;
   uuid: string;
   name: string;
   description: string;
