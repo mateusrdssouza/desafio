@@ -1,9 +1,9 @@
 export class User {
-  id: bigint;
+  id: number;
   uuid: string;
   name: string;
   email: string;
-  balance: bigint;
+  balance: number;
   password: string;
   createdAt: Date;
   updatedAt: Date;

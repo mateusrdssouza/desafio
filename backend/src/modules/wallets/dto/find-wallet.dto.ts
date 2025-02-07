@@ -9,7 +9,7 @@ export class FindWalletDto {
   name: string;
 
   @Expose()
-  balance: bigint;
+  balance: number;
 
   @Expose()
   createdAt: Date;

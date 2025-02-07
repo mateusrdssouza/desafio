@@ -1,8 +1,8 @@
 export class Investment {
-  id: bigint;
+  id: number;
   uuid: string;
-  shares: bigint;
-  amount: bigint;
+  shares: number;
+  amount: number;
   createdAt: Date;
   updatedAt: Date;
 }

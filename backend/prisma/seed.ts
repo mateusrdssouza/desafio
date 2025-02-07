@@ -15,7 +15,7 @@ async function main() {
         ticker: 'AAPL',
         stockExchange: 'NASDAQ',
         stockPrice: 14560,
-        marketCapitalization: 2500000000000,
+        marketCapitalization: '2,5 trilhões',
         marketRiskLevel: 'HIGH',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg',
@@ -29,7 +29,7 @@ async function main() {
         ticker: 'MSFT',
         stockExchange: 'NASDAQ',
         stockPrice: 30210,
-        marketCapitalization: 2200000000000,
+        marketCapitalization: '2,2 trilhões',
         marketRiskLevel: 'LOW',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg',
@@ -42,7 +42,7 @@ async function main() {
         ticker: 'AMZN',
         stockExchange: 'NASDAQ',
         stockPrice: 13320,
-        marketCapitalization: 1700000000000,
+        marketCapitalization: '1,7 trilhões',
         marketRiskLevel: 'MEDIUM',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
@@ -56,7 +56,7 @@ async function main() {
         ticker: 'META',
         stockExchange: 'NASDAQ',
         stockPrice: 12050,
-        marketCapitalization: 600000000000,
+        marketCapitalization: '600 bilhões',
         marketRiskLevel: 'MEDIUM',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg',
@@ -69,7 +69,7 @@ async function main() {
         ticker: 'NFLX',
         stockExchange: 'NASDAQ',
         stockPrice: 34030,
-        marketCapitalization: 200000000000,
+        marketCapitalization: '200 bilhões',
         marketRiskLevel: 'HIGH',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/6/69/Netflix_logo.svg',
@@ -83,7 +83,7 @@ async function main() {
         ticker: 'NVDA',
         stockExchange: 'NASDAQ',
         stockPrice: 48075,
-        marketCapitalization: 900000000000,
+        marketCapitalization: '900 bilhões',
         marketRiskLevel: 'LOW',
         logoUrl:
           'https://upload.wikimedia.org/wikipedia/commons/a/a4/NVIDIA_logo.svg',

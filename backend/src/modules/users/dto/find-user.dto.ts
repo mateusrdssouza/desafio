@@ -11,7 +11,7 @@ export class FindUserDto {
   email: string;
 
   @Expose()
-  balance: bigint;
+  balance: number;
 
   @Expose()
   createdAt: Date;
