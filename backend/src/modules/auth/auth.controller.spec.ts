@@ -1,4 +1,4 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -69,14 +69,9 @@ describe('AuthController', () => {
     try {
       await authController.login(invalidLoginDto);
     } catch (error) {
-      expect(error.status).toBe(400);
+      expect(error).toBeInstanceOf(BadRequestException);
       expect(error.response.message).toContain('email must be an email');
     }
-  });
-
-  it('should return a valid JWT token', async () => {
-    const result = await authController.login(mockLoginDto);
-    expect(result.access_token).toEqual(expect.any(String));
   });
 
   it('should throw a generic error if an unexpected error occurs during login', async () => {

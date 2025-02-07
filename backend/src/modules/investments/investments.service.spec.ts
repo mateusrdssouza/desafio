@@ -119,10 +119,6 @@ describe('InvestmentsService', () => {
       .spyOn(walletsRepository, 'findByUuid')
       .mockResolvedValue({ uuid: 'valid-wallet-uuid' } as any);
     jest.spyOn(usersRepository, 'findByUuid').mockResolvedValue(mockUser);
-    jest
-      .spyOn(investmentsRepository, 'create')
-      .mockResolvedValue({} as Investment);
-
     jest.spyOn(investmentsRepository, 'findAllCompanies').mockResolvedValue([]);
 
     try {

@@ -65,6 +65,19 @@ describe('AuthService', () => {
     );
   });
 
+  it('should throw UnauthorizedException if user not found', async () => {
+    const mockEmail = 'nonexistent@example.com';
+
+    (usersService.findByEmail as jest.Mock).mockResolvedValue(null);
+
+    try {
+      await authService.login(mockEmail, 'valid_password');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+      expect(error.response.message).toBe('Credenciais inválidas');
+    }
+  });
+
   it('should throw UnauthorizedException if credentials are invalid', async () => {
     const { comparePasswords } = require('src/utils/bcrypt');
     comparePasswords.mockResolvedValue(false);
@@ -87,36 +100,6 @@ describe('AuthService', () => {
 
     await authService.login(mockUser.email, 'valid_password');
     expect(usersService.findByEmail).toHaveBeenCalledWith(mockUser.email);
-  });
-
-  it('should throw UnauthorizedException if user not found', async () => {
-    const { comparePasswords } = require('src/utils/bcrypt');
-    const mockEmail = 'nonexistent@example.com';
-
-    (usersService.findByEmail as jest.Mock).mockResolvedValue(null);
-
-    comparePasswords.mockResolvedValue(false);
-
-    try {
-      await authService.login(mockEmail, 'valid_password');
-    } catch (error) {
-      expect(error).toBeInstanceOf(UnauthorizedException);
-      expect(error.response.message).toBe('Credenciais inválidas');
-    }
-  });
-
-  it('should throw UnauthorizedException if comparePasswords fails', async () => {
-    const { comparePasswords } = require('src/utils/bcrypt');
-    comparePasswords.mockResolvedValue(false);
-
-    (usersService.findByEmail as jest.Mock).mockResolvedValue(mockUser);
-
-    try {
-      await authService.login(mockUser.email, 'wrong_password');
-    } catch (error) {
-      expect(error).toBeInstanceOf(UnauthorizedException);
-      expect(error.response.message).toBe('Credenciais inválidas');
-    }
   });
 
   it('should throw error if JwtService.signAsync fails', async () => {

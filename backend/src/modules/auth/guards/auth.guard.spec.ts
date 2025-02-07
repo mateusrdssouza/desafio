@@ -43,7 +43,9 @@ describe('AuthGuard', () => {
     expect(authGuard).toBeDefined();
   });
 
-  it('should return true when token is valid', async () => {
+  it('should allow access to public routes without authentication', async () => {
+    jest.spyOn(reflector, 'getAllAndOverride').mockReturnValue(true);
+
     const mockExecutionContext = {
       switchToHttp: () => ({
         getRequest: () => mockRequest,
@@ -56,9 +58,7 @@ describe('AuthGuard', () => {
     expect(result).toBe(true);
   });
 
-  it('should allow access to public routes without authentication', async () => {
-    jest.spyOn(reflector, 'getAllAndOverride').mockReturnValue(true);
-
+  it('should return true when token is valid', async () => {
     const mockExecutionContext = {
       switchToHttp: () => ({
         getRequest: () => mockRequest,
@@ -89,66 +89,30 @@ describe('AuthGuard', () => {
     }
   });
 
-  it('should throw UnauthorizedException if token is invalid', async () => {
-    jest
-      .spyOn(jwtService, 'verifyAsync')
-      .mockRejectedValueOnce(new Error('Invalid token'));
+  it('should throw UnauthorizedException for invalid, expired, or malformed token', async () => {
+    const errors = [
+      new Error('Invalid token'),
+      new Error('jwt expired'),
+      new Error('jwt malformed'),
+    ];
 
-    const mockExecutionContext = {
-      switchToHttp: () => ({
-        getRequest: () => mockRequest,
-      }),
-      getHandler: jest.fn().mockReturnValue(() => null),
-      getClass: jest.fn().mockReturnValue(() => null),
-    } as unknown as ExecutionContext;
+    for (const error of errors) {
+      jest.spyOn(jwtService, 'verifyAsync').mockRejectedValueOnce(error);
 
-    try {
-      await authGuard.canActivate(mockExecutionContext);
-    } catch (error) {
-      expect(error).toBeInstanceOf(UnauthorizedException);
-      expect(error.response.message).toBe('Acesso não autorizado');
-    }
-  });
+      const mockExecutionContext = {
+        switchToHttp: () => ({
+          getRequest: () => mockRequest,
+        }),
+        getHandler: jest.fn().mockReturnValue(() => null),
+        getClass: jest.fn().mockReturnValue(() => null),
+      } as unknown as ExecutionContext;
 
-  it('should throw UnauthorizedException if token is expired', async () => {
-    jest
-      .spyOn(jwtService, 'verifyAsync')
-      .mockRejectedValueOnce(new Error('jwt expired'));
-
-    const mockExecutionContext = {
-      switchToHttp: () => ({
-        getRequest: () => mockRequest,
-      }),
-      getHandler: jest.fn().mockReturnValue(() => null),
-      getClass: jest.fn().mockReturnValue(() => null),
-    } as unknown as ExecutionContext;
-
-    try {
-      await authGuard.canActivate(mockExecutionContext);
-    } catch (error) {
-      expect(error).toBeInstanceOf(UnauthorizedException);
-      expect(error.response.message).toBe('Acesso não autorizado');
-    }
-  });
-
-  it('should throw UnauthorizedException if token is malformed', async () => {
-    jest
-      .spyOn(jwtService, 'verifyAsync')
-      .mockRejectedValueOnce(new Error('jwt malformed'));
-
-    const mockExecutionContext = {
-      switchToHttp: () => ({
-        getRequest: () => mockRequest,
-      }),
-      getHandler: jest.fn().mockReturnValue(() => null),
-      getClass: jest.fn().mockReturnValue(() => null),
-    } as unknown as ExecutionContext;
-
-    try {
-      await authGuard.canActivate(mockExecutionContext);
-    } catch (error) {
-      expect(error).toBeInstanceOf(UnauthorizedException);
-      expect(error.response.message).toBe('Acesso não autorizado');
+      try {
+        await authGuard.canActivate(mockExecutionContext);
+      } catch (e) {
+        expect(e).toBeInstanceOf(UnauthorizedException);
+        expect(e.response.message).toBe('Acesso não autorizado');
+      }
     }
   });
 });

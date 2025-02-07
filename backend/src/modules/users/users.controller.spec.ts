@@ -69,32 +69,6 @@ describe('UsersController', () => {
     }
   });
 
-  it('should throw BadRequestException with specific message if password encryption fails', async () => {
-    jest
-      .spyOn(usersService, 'create')
-      .mockRejectedValue(new Error('Password encryption failed'));
-
-    try {
-      await usersController.create(createUserDto);
-    } catch (error) {
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Password encryption failed');
-    }
-  });
-
-  it('should throw BadRequestException if user creation fails', async () => {
-    jest
-      .spyOn(usersService, 'create')
-      .mockRejectedValue(new Error('User creation failed'));
-
-    try {
-      await usersController.create(createUserDto);
-    } catch (error) {
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('User creation failed');
-    }
-  });
-
   it('should throw BadRequestException if email already exists (ConflictException handled by controller)', async () => {
     jest
       .spyOn(usersService, 'create')

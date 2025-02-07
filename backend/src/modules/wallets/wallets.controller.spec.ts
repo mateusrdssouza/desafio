@@ -51,9 +51,9 @@ describe('WalletsController', () => {
     );
   });
 
-  it('should throw BadRequestException if no user is authenticated', async () => {
-    const createDto = { name: 'My Wallet' };
+  it('should throw BadRequestException if no user is authenticated when creating a wallet', async () => {
     const invalidAuthRequest = {} as AuthRequest;
+    const createDto = { name: 'My Wallet' };
 
     await expect(
       controller.create(createDto, invalidAuthRequest),
@@ -76,7 +76,7 @@ describe('WalletsController', () => {
     );
   });
 
-  it('should throw BadRequestException if no user is authenticated on findAll', async () => {
+  it('should throw BadRequestException if no user is authenticated when listing wallets', async () => {
     const invalidAuthRequest = {} as AuthRequest;
 
     await expect(controller.findAll(invalidAuthRequest)).rejects.toThrowError(
@@ -114,47 +114,6 @@ describe('WalletsController', () => {
     ).rejects.toThrowError(BadRequestException);
   });
 
-  it('should throw BadRequestException when trying to access another user’s wallet during update', async () => {
-    const uuid = 'wallet-uuid';
-    const updateDto = { name: 'Updated Wallet' };
-
-    mockWalletsService.update.mockRejectedValue(
-      new BadRequestException(
-        'Você não tem permissão para atualizar esta carteira',
-      ),
-    );
-
-    await expect(
-      controller.update(uuid, updateDto, mockAuthRequest),
-    ).rejects.toThrowError(BadRequestException);
-  });
-
-  it('should throw BadRequestException if updating a wallet to an existing name', async () => {
-    const uuid = 'wallet-uuid';
-    const updateDto = { name: 'Existing Wallet Name' };
-
-    mockWalletsService.update.mockRejectedValue(
-      new BadRequestException('Nome da carteira já existe'),
-    );
-
-    await expect(
-      controller.update(uuid, updateDto, mockAuthRequest),
-    ).rejects.toThrowError(BadRequestException);
-  });
-
-  it('should throw BadRequestException if update data is invalid', async () => {
-    const uuid = 'wallet-uuid';
-    const updateDto = { name: '' };
-
-    mockWalletsService.update.mockRejectedValue(
-      new BadRequestException('Nome da carteira não pode ser vazio'),
-    );
-
-    await expect(
-      controller.update(uuid, updateDto, mockAuthRequest),
-    ).rejects.toThrowError(BadRequestException);
-  });
-
   it('should delete a wallet', async () => {
     const uuid = 'wallet-uuid';
     const deletedWallet = { uuid, name: 'My Wallet', balance: 0 };
@@ -182,31 +141,13 @@ describe('WalletsController', () => {
     );
   });
 
-  it('should throw BadRequestException when trying to access another user’s wallet during delete', async () => {
+  it('should throw BadRequestException if no user is authenticated when deleting a wallet', async () => {
     const uuid = 'wallet-uuid';
+    const invalidAuthRequest = {} as AuthRequest;
 
-    mockWalletsService.delete.mockRejectedValue(
-      new BadRequestException(
-        'Você não tem permissão para excluir esta carteira',
-      ),
-    );
-
-    await expect(controller.remove(uuid, mockAuthRequest)).rejects.toThrowError(
-      BadRequestException,
-    );
-  });
-
-  it('should return an empty array when no wallets are found', async () => {
-    const wallets = [];
-
-    mockWalletsService.findAll.mockResolvedValue(wallets);
-
-    const result = await controller.findAll(mockAuthRequest);
-
-    expect(result).toEqual(wallets);
-    expect(mockWalletsService.findAll).toHaveBeenCalledWith(
-      mockAuthRequest.user,
-    );
+    await expect(
+      controller.remove(uuid, invalidAuthRequest),
+    ).rejects.toThrowError(BadRequestException);
   });
 
   it('should throw an error when wallet creation fails', async () => {

@@ -6,7 +6,6 @@ import {
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersRepository } from 'src/repositories/users-repository';
 import * as bcryptUtils from 'src/utils/bcrypt';
-import { encryptPassword } from 'src/utils/bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -59,7 +58,9 @@ describe('UsersService', () => {
   it('should create a new user successfully', async () => {
     jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(null);
     jest.spyOn(usersRepository, 'create').mockResolvedValue(mockUser);
-    (encryptPassword as jest.Mock).mockResolvedValue('hashedPassword');
+    (bcryptUtils.encryptPassword as jest.Mock).mockResolvedValue(
+      'hashedPassword',
+    );
 
     const result = await usersService.create(createUserDto);
 
@@ -83,15 +84,13 @@ describe('UsersService', () => {
   });
 
   it('should call findByEmail when checking if email exists', async () => {
-    jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(mockUser);
+    jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(null);
 
-    try {
-      await usersService.create(createUserDto);
-    } catch (error) {
-      expect(usersRepository.findByEmail).toHaveBeenCalledWith(
-        createUserDto.email,
-      );
-    }
+    await usersService.create(createUserDto);
+
+    expect(usersRepository.findByEmail).toHaveBeenCalledWith(
+      createUserDto.email,
+    );
   });
 
   it('should throw BadRequestException if password encryption fails', async () => {

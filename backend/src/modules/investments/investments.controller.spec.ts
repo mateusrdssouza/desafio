@@ -102,6 +102,21 @@ describe('InvestmentsController', () => {
     }
   });
 
+  it('should throw BadRequestException if company is not found during creation', async () => {
+    jest
+      .spyOn(investmentsService, 'create')
+      .mockRejectedValue(new NotFoundException('Carteira não encontrada'));
+
+    try {
+      await investmentsController.create(createInvestmentDto, {
+        user: mockUser,
+      } as AuthRequest);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestException);
+      expect(error.message).toBe('Carteira não encontrada');
+    }
+  });
+
   it('should return all companies successfully', async () => {
     const mockCompanies: Company[] = [
       {
@@ -145,21 +160,6 @@ describe('InvestmentsController', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BadRequestException);
       expect(error.message).toBe('Erro ao listar as empresas');
-    }
-  });
-
-  it('should throw BadRequestException if company is not found during creation', async () => {
-    jest
-      .spyOn(investmentsService, 'create')
-      .mockRejectedValue(new NotFoundException('Carteira não encontrada'));
-
-    try {
-      await investmentsController.create(createInvestmentDto, {
-        user: mockUser,
-      } as AuthRequest);
-    } catch (error) {
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Carteira não encontrada');
     }
   });
 
