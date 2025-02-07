@@ -12,10 +12,10 @@ export class UpdateInvestmentDto {
   @IsNotEmpty({ message: 'Informe a quantidade de ações' })
   @IsInt({ message: 'Informe uma quantidade válida' })
   @IsPositive({ message: 'Informe uma quantidade válida' })
-  shares: number;
+  shares: bigint;
 
   @IsNotEmpty({ message: 'Informe o valor das ações' })
   @IsInt({ message: 'Informe um valor válido' })
   @IsPositive({ message: 'Informe um valor válido' })
-  amount: number;
+  amount: bigint;
 }

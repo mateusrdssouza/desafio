@@ -1,10 +1,10 @@
 import { Investment } from 'src/modules/investments/entities/investment.entity';
 
 export class Wallet {
-  id: number;
+  id: bigint;
   uuid: string;
   name: string;
-  balance: number;
+  balance: bigint;
   createdAt: Date;
   updatedAt: Date;
   investments?: Investment[];

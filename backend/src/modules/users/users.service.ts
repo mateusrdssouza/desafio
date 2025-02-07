@@ -25,7 +25,7 @@ export class UsersService {
       return await this.usersRepository.create({
         ...data,
         password: hashedPassword,
-        balance: parseInt(process.env.OPENING_BALANCE ?? '0'),
+        balance: BigInt(process.env.OPENING_BALANCE ?? '0'),
       });
     } catch (error) {
       throw error;

@@ -20,7 +20,7 @@ export class CreateUserDto {
   @IsOptional()
   @IsInt({ message: 'Informe um valor' })
   @IsPositive({ message: 'Informe um valor válido' })
-  balance?: number;
+  balance?: bigint;
 
   @IsNotEmpty({ message: 'Digite uma senha' })
   @IsString({ message: 'Digite uma senha válida' })

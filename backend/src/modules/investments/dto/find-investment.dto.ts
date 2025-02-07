@@ -5,10 +5,10 @@ export class FindInvestmentDto {
   uuid: string;
 
   @Expose()
-  shares: number;
+  shares: bigint;
 
   @Expose()
-  amount: number;
+  amount: bigint;
 
   @Expose()
   createdAt: Date;
