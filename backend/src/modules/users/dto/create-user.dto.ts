@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: 'Digite um nome' })
@@ -8,6 +16,11 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'Digite um e-mail' })
   @IsEmail({}, { message: 'Digite um e-mail válido' })
   email: string;
+
+  @IsOptional()
+  @IsInt({ message: 'Informe um valor' })
+  @IsPositive({ message: 'Informe um valor válido' })
+  balance?: number;
 
   @IsNotEmpty({ message: 'Digite uma senha' })
   @IsString({ message: 'Digite uma senha válida' })
