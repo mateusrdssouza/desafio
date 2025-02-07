@@ -36,6 +36,7 @@ export const setupToken = (token: string) => {
   setCookie(undefined, "backend.token", token, {
     maxAge: 60 * 60 * 24 * 30,
     path: "/",
+    sameSite: "strict",
   });
 };
 
