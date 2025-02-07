@@ -1,7 +1,11 @@
-export default function Home() {
+import PageTitle from "@/components/layouts/PageTitle";
+import SignIn from "@/components/pages/signin/Signin";
+
+export default function Login() {
   return (
-    <div>
-      <h1>Hello World!</h1>
-    </div>
+    <>
+      <PageTitle title="Login" />
+      <SignIn />
+    </>
   );
 }
