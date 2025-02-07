@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateInvestmentDto } from 'src/modules/investments/dto/create-investment.dto';
 import { UpdateInvestmentDto } from 'src/modules/investments/dto/update-investment.dto';
+import { Company } from 'src/modules/investments/entities/company.entity';
 import { Investment } from 'src/modules/investments/entities/investment.entity';
 import { InvestmentsRepository } from '../investments-repository';
 
@@ -18,6 +19,13 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
         wallet: { connect: { uuid: walletUuid } },
         company: { connect: { uuid: companyUuid } },
       },
+    });
+  }
+
+  async findAllCompanies(): Promise<Company[]> {
+    return await this.prismaService.company.findMany({
+      where: { deletedAt: null },
+      orderBy: { name: 'asc' },
     });
   }
 

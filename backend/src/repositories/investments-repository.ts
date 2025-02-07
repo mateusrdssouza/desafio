@@ -1,9 +1,11 @@
 import { CreateInvestmentDto } from 'src/modules/investments/dto/create-investment.dto';
 import { UpdateInvestmentDto } from 'src/modules/investments/dto/update-investment.dto';
+import { Company } from 'src/modules/investments/entities/company.entity';
 import { Investment } from 'src/modules/investments/entities/investment.entity';
 
 export abstract class InvestmentsRepository {
   abstract create(data: CreateInvestmentDto): Promise<Investment>;
+  abstract findAllCompanies(): Promise<Company[]>;
   abstract findByUuid(
     userUuid: string,
     uuid: string,

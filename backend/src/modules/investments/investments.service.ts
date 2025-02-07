@@ -9,6 +9,7 @@ import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
 import { UpdateInvestmentDto } from './dto/update-investment.dto';
+import { Company } from './entities/company.entity';
 import { Investment } from './entities/investment.entity';
 
 @Injectable()
@@ -18,6 +19,14 @@ export class InvestmentsService {
     private readonly walletsRepository: WalletsRepository,
     private readonly usersRepository: UsersRepository,
   ) {}
+
+  async findAllCompanies(): Promise<Company[]> {
+    try {
+      return await this.investmentsRepository.findAllCompanies();
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async create(
     user: User,
