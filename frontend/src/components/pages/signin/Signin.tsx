@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useSignin } from "./hooks/useSignin";
 
 export default function SignIn() {
@@ -21,6 +28,7 @@ export default function SignIn() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop: 10,
           padding: 3,
           boxShadow: 3,
           borderRadius: 2,
@@ -60,16 +68,22 @@ export default function SignIn() {
 
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
             loading={isSubmitting || loading}
             disabled={isSubmitting || loading}
             sx={{ mt: 3, mb: 2 }}
+            fullWidth
           >
             {isSubmitting || loading ? "Entrando..." : "Entrar"}
           </Button>
         </form>
+
+        <Box display={"flex"} alignSelf={"start"}>
+          <Typography fontSize={14}>
+            Não tem conta? <Link href="/signup">Clique aqui</Link>
+          </Typography>
+        </Box>
       </Box>
     </Container>
   );
