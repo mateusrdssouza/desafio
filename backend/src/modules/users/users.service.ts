@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -20,13 +21,17 @@ export class UsersService {
         throw new ConflictException('O e-mail informado já está em uso');
       }
 
-      const hashedPassword = await encryptPassword(data.password);
+      try {
+        const hashedPassword = await encryptPassword(data.password);
 
-      return await this.usersRepository.create({
-        ...data,
-        password: hashedPassword,
-        balance: parseInt(process.env.OPENING_BALANCE ?? '0'),
-      });
+        return await this.usersRepository.create({
+          ...data,
+          password: hashedPassword,
+          balance: parseInt(process.env.OPENING_BALANCE ?? '0'),
+        });
+      } catch (error) {
+        throw new BadRequestException('Ocorreu um erro no cadastro do usuário');
+      }
     } catch (error) {
       throw error;
     }
