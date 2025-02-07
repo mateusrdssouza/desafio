@@ -1,19 +1,18 @@
-import "./globals.css";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import CssBaseline from "@mui/material/CssBaseline";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
+import * as React from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body>
-        <header>
-          <h1>Meu Site</h1>
-        </header>
-        <main>{children}</main>
-        <footer>
-          <p>© 2025 Todos os direitos reservados.</p>
-        </footer>
+        <InitColorSchemeScript attribute="class" />
+
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <CssBaseline />
+          {props.children}
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
