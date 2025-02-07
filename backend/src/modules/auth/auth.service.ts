@@ -14,6 +14,10 @@ export class AuthService {
   async login(email: string, pass: string): Promise<AccessTokenDto> {
     const user = await this.usersService.findByEmail(email);
 
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+
     const isValid = await comparePasswords(pass, user.password);
 
     if (!isValid) {
