@@ -39,6 +39,7 @@ export function useDelete({ uuid, close }: useDeleteProps) {
     await deleteWallet(data.uuid)
       .then(response => {
         toast.success(response?.data?.message || "Sucesso");
+        queryClient.invalidateQueries({ queryKey: ["/users", "/me"] });
         queryClient.invalidateQueries({ queryKey: ["/wallets"] });
         queryClient.invalidateQueries({ queryKey: ["/wallet", uuid] });
         if (close) close();

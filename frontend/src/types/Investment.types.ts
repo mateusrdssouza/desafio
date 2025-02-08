@@ -22,6 +22,7 @@ export interface InvestmentType {
   uuid: string;
   shares: number;
   amount: number;
+  company: CompanyType;
 }
 
 export enum MarketRiskLevel {

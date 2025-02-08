@@ -1,4 +1,4 @@
-import { InvestmentType } from "./Investment.type";
+import { InvestmentType } from "./Investment.types";
 
 export interface CreateWalletType {
   name: string;

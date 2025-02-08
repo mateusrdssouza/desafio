@@ -1,5 +1,5 @@
 import { api } from "@/services/apiClient";
-import { CompanyType, CreateInvestmentType } from "@/types/Investment.type";
+import { CompanyType, CreateInvestmentType } from "@/types/Investment.types";
 
 export async function fetchCompanies(): Promise<CompanyType[]> {
   const { data } = await api.get(`/investments/companies`);
