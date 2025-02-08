@@ -69,11 +69,11 @@ export class InvestmentsController {
       await this.investmentsService.delete(req.user, uuid);
 
       return {
-        message: 'Investimento excluído com sucesso',
+        message: 'Investimento resgatado com sucesso',
       };
     } catch (error) {
       throw new BadRequestException(
-        error?.message || 'Erro ao excluir o investimento',
+        error?.message || 'Erro ao resgatar o investimento',
       );
     }
   }

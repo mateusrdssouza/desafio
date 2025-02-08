@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { FindCompanyDto } from './find-company.dto';
 
 export class FindInvestmentDto {
   @Expose()
@@ -15,4 +16,8 @@ export class FindInvestmentDto {
 
   @Expose()
   updatedAt: Date;
+
+  @Expose()
+  @Type(() => FindCompanyDto)
+  company?: FindCompanyDto[];
 }

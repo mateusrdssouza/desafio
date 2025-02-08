@@ -85,19 +85,17 @@ export class WalletsController {
     @Param('uuid') uuid: string,
     @Body() updateWalletDto: UpdateWalletDto,
     @Request() req: AuthRequest,
-  ): Promise<FindWalletDto> {
+  ): Promise<{ message: string }> {
     try {
       if (!req.user) {
         throw new UnauthorizedException('Acesso não autorizado');
       }
 
-      const wallet = await this.walletsService.update(
-        req.user,
-        uuid,
-        updateWalletDto,
-      );
+      await this.walletsService.update(req.user, uuid, updateWalletDto);
 
-      return transformToDto(FindWalletDto, wallet);
+      return {
+        message: 'Carteira atualizada com sucesso',
+      };
     } catch (error) {
       throw new BadRequestException(
         error?.message || 'Erro ao atualizar a carteira',

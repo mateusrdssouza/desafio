@@ -1,4 +1,5 @@
 import { Wallet } from 'src/modules/wallets/entities/wallet.entity';
+import { Company } from './company.entity';
 
 export class Investment {
   id: number;
@@ -8,4 +9,5 @@ export class Investment {
   createdAt: Date;
   updatedAt: Date;
   wallet?: Wallet;
+  company?: Company;
 }

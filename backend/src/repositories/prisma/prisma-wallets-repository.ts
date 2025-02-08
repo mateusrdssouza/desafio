@@ -18,7 +18,9 @@ export class PrismaWalletsRepository implements WalletsRepository {
   async findAll(userUuid: string): Promise<Wallet[]> {
     return await this.prismaService.wallet.findMany({
       where: { user: { uuid: userUuid }, deletedAt: null },
-      include: { investments: { where: { deletedAt: null } } },
+      include: {
+        investments: { where: { deletedAt: null }, include: { company: true } },
+      },
       orderBy: { name: 'asc' },
     });
   }
@@ -38,7 +40,9 @@ export class PrismaWalletsRepository implements WalletsRepository {
   async findByUuid(userUuid: string, uuid: string): Promise<Wallet | null> {
     return await this.prismaService.wallet.findFirst({
       where: { uuid, user: { uuid: userUuid }, deletedAt: null },
-      include: { investments: { where: { deletedAt: null } } },
+      include: {
+        investments: { where: { deletedAt: null }, include: { company: true } },
+      },
     });
   }
 

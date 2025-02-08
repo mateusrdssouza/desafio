@@ -179,7 +179,7 @@ describe('InvestmentsController', () => {
       user: mockUser,
     } as AuthRequest);
 
-    expect(result).toEqual({ message: 'Investimento excluído com sucesso' });
+    expect(result).toEqual({ message: 'Investimento resgatado com sucesso' });
     expect(investmentsService.delete).toHaveBeenCalledWith(
       mockUser,
       'valid-investment-uuid',

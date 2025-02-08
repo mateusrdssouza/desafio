@@ -93,7 +93,8 @@ describe('WalletsController', () => {
 
     const result = await controller.update(uuid, updateDto, mockAuthRequest);
 
-    expect(result).toEqual(updatedWallet);
+    expect(result).toEqual({ message: 'Carteira atualizada com sucesso' });
+
     expect(mockWalletsService.update).toHaveBeenCalledWith(
       mockAuthRequest.user,
       uuid,
