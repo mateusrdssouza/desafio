@@ -30,6 +30,6 @@ export const updateWallet = (data: UpdateWalletType): AxiosPromise => {
   return api.patch(`/wallets/${uuid}`, fields);
 };
 
-export const deleteWallet = (uuid: string): Promise<{ message: string }> => {
+export const deleteWallet = (uuid: string): AxiosPromise => {
   return api.delete(`/wallets/${uuid}`);
 };

@@ -2,13 +2,28 @@
 
 import CreateIcon from "@mui/icons-material/Create";
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import Delete from "./components/Delete/Delete";
+import { useDelete } from "./components/Delete/hooks/useDelete";
 import { useUpdate } from "./components/Update/hooks/useUpdate";
 import Update from "./components/Update/Update";
 import { useWallet } from "./hooks/useWallet";
 
 export default function Wallet() {
   const { wallet } = useWallet();
-  const { open, handleClickOpen, handleClose } = useUpdate({
+
+  const {
+    open: openUpdate,
+    handleClickOpen: handleClickOpenUpdate,
+    handleClose: handleCloseUpdate,
+  } = useUpdate({
+    uuid: wallet?.uuid,
+  });
+
+  const {
+    open: openDelete,
+    handleClickOpen: handleClickOpenDelete,
+    handleClose: handleCloseDelete,
+  } = useDelete({
     uuid: wallet?.uuid,
   });
 
@@ -33,17 +48,29 @@ export default function Wallet() {
             <CreateIcon
               color="info"
               sx={{ cursor: "pointer" }}
-              onClick={handleClickOpen}
+              onClick={handleClickOpenUpdate}
             />
           </Box>
 
-          <Button variant="text" color="error">
+          <Button variant="text" color="error" onClick={handleClickOpenDelete}>
             Excluir
           </Button>
         </Box>
+
+        <p>{JSON.stringify(wallet)}</p>
       </Paper>
 
-      <Update uuid={wallet.uuid} open={open} handleClose={handleClose} />
+      <Update
+        uuid={wallet.uuid}
+        open={openUpdate}
+        handleClose={handleCloseUpdate}
+      />
+
+      <Delete
+        uuid={wallet.uuid}
+        open={openDelete}
+        handleClose={handleCloseDelete}
+      />
     </Container>
   );
 }

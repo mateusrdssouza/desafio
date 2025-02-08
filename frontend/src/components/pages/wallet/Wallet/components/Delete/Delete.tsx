@@ -1,24 +1,29 @@
 "use client";
 
 import {
+  Alert,
+  AlertTitle,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
 } from "@mui/material";
 import { Fragment } from "react";
-import { useCreate } from "./hooks/useCreate";
 
-interface CreateProps {
+import { useDelete } from "./hooks/useDelete";
+
+interface DeleteProps {
+  uuid: string;
   open: boolean;
   handleClose: () => void;
 }
 
-export default function Create({ open, handleClose }: CreateProps) {
-  const { errors, isSubmitting, loading, handleSubmit, onSubmit, register } =
-    useCreate({ close: handleClose });
+export default function Delete({ uuid, open, handleClose }: DeleteProps) {
+  const { isSubmitting, loading, handleSubmit, onSubmit } = useDelete({
+    uuid,
+    close: handleClose,
+  });
 
   return (
     <Fragment>
@@ -27,22 +32,19 @@ export default function Create({ open, handleClose }: CreateProps) {
         onClose={handleClose}
         sx={{ "& .MuiDialog-paper": { width: "500px" } }}
       >
-        <DialogTitle>Nova carteira</DialogTitle>
+        <DialogTitle>Excluir carteira</DialogTitle>
 
-        <form id="create" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form id="delete" onSubmit={handleSubmit(onSubmit)} noValidate>
           <DialogContent sx={{ marginTop: -3 }}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              id="name"
-              label="Nome"
-              type="text"
-              fullWidth
-              autoFocus
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              {...register("name")}
-            />
+            <Alert
+              severity="warning"
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <AlertTitle sx={{ fontWeight: "bold" }}>
+                Tem certeza que deseja excluir a carteira?
+              </AlertTitle>
+              Todos os investimentos serão retornados para seu saldo
+            </Alert>
           </DialogContent>
 
           <DialogActions
@@ -54,9 +56,10 @@ export default function Create({ open, handleClose }: CreateProps) {
             <Button
               type="submit"
               variant="contained"
+              color="error"
               disabled={isSubmitting || loading}
             >
-              Cadastrar
+              Excluir
             </Button>
           </DialogActions>
         </form>

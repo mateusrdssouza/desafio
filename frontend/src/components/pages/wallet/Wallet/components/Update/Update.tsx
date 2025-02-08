@@ -30,7 +30,7 @@ export default function Update({ uuid, open, handleClose }: UpdateProps) {
       >
         <DialogTitle>Atualizar carteira</DialogTitle>
 
-        <form id="signup" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form id="update" onSubmit={handleSubmit(onSubmit)} noValidate>
           <DialogContent sx={{ marginTop: -3 }}>
             <TextField
               variant="outlined"
