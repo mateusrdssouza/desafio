@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Grid2 } from "@mui/material";
+import { Button, Container, Grid2 } from "@mui/material";
 import Empty from "./components/Empty/Empty";
 import Wallet from "./components/Wallet/Wallet";
 import { useDashboard } from "./hooks/useDashboard";
@@ -8,10 +8,10 @@ import { useDashboard } from "./hooks/useDashboard";
 export default function Dashboard() {
   const { wallets } = useDashboard();
 
-  if (!wallets) return <Empty />;
+  if (!wallets?.length) return <Empty />;
 
   return (
-    <Container>
+    <Container sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <Grid2
         container
         spacing={{ xs: 2, md: 3 }}
@@ -24,6 +24,10 @@ export default function Dashboard() {
           </Grid2>
         ))}
       </Grid2>
+
+      <Button variant="contained" color="primary">
+        Criar Nova Carteira
+      </Button>
     </Container>
   );
 }
