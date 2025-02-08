@@ -41,6 +41,7 @@ describe('UsersService', () => {
           provide: UsersRepository,
           useValue: {
             findByEmail: jest.fn(),
+            findByUuid: jest.fn(),
             create: jest.fn(),
           },
         },
@@ -132,6 +133,25 @@ describe('UsersService', () => {
 
     try {
       await usersService.findByEmail('nonexistent@example.com');
+    } catch (error) {
+      expect(error).toBeInstanceOf(NotFoundException);
+      expect(error.message).toBe('Usuário não encontrado');
+    }
+  });
+
+  it('should find user by UUID', async () => {
+    jest.spyOn(usersRepository, 'findByUuid').mockResolvedValue(mockUser);
+
+    const result = await usersService.findOne('uuid');
+
+    expect(result).toEqual(mockUser);
+  });
+
+  it('should throw NotFoundException if user not found by UUID', async () => {
+    jest.spyOn(usersRepository, 'findByUuid').mockResolvedValue(null);
+
+    try {
+      await usersService.findOne('nonexistent-uuid');
     } catch (error) {
       expect(error).toBeInstanceOf(NotFoundException);
       expect(error.message).toBe('Usuário não encontrado');
