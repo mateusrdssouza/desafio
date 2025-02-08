@@ -7,6 +7,7 @@ import { InvestmentsRepository } from 'src/repositories/investments-repository';
 import { UsersRepository } from 'src/repositories/users-repository';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
+import { UpdateWalletDto } from '../wallets/dto/update-wallet.dto';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
 import { UpdateInvestmentDto } from './dto/update-investment.dto';
 import { Company } from './entities/company.entity';
@@ -70,6 +71,17 @@ export class InvestmentsService {
         await this.investmentsRepository.create(data);
       }
 
+      const updatedWallet: UpdateWalletDto = {
+        name: wallet.name,
+        balance: wallet.balance + data.amount,
+      };
+
+      await this.walletsRepository.update(
+        user.uuid,
+        data.walletUuid,
+        updatedWallet,
+      );
+
       const balance = search.balance - data.amount;
 
       await this.usersRepository.update(user.uuid, { balance });
@@ -93,11 +105,26 @@ export class InvestmentsService {
         throw new NotFoundException('Investimento não encontrado');
       }
 
+      if (!investment.wallet) {
+        throw new NotFoundException('Carteira não encontrada');
+      }
+
       const search = await this.usersRepository.findByUuid(user.uuid);
 
       if (!search) {
         throw new NotFoundException('Usuário não encontrado');
       }
+
+      const updatedWallet: UpdateWalletDto = {
+        name: investment.wallet.name,
+        balance: investment.wallet.balance - investment.amount,
+      };
+
+      await this.walletsRepository.update(
+        user.uuid,
+        investment.wallet.uuid,
+        updatedWallet,
+      );
 
       const balance = search.balance + investment.amount;
 

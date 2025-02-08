@@ -32,6 +32,7 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
   async findByUuid(userUuid: string, uuid: string): Promise<Investment | null> {
     return await this.prismaService.investment.findFirst({
       where: { uuid, wallet: { user: { uuid: userUuid } }, deletedAt: null },
+      include: { wallet: true },
     });
   }
 
