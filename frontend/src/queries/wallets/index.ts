@@ -1,4 +1,4 @@
-import { fetchWalletById, fetchWallets } from "@/services/http/wallets";
+import { fetchWalletByUuid, fetchWallets } from "@/services/http/wallets";
 import { useQuery } from "@tanstack/react-query";
 
 export function useFetchWallets() {
@@ -14,10 +14,11 @@ export function useFetchWallets() {
   };
 }
 
-export function useFetchWalletById(uuid: string) {
+export function useFetchWalletByUuid(uuid: string) {
   const query = useQuery({
     queryKey: ["/wallet", uuid],
-    queryFn: fetchWalletById,
+    queryFn: fetchWalletByUuid,
+    enabled: !!uuid,
     staleTime: 1000 * 60 * 5,
   });
 

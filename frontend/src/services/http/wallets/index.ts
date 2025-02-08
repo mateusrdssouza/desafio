@@ -11,7 +11,7 @@ export async function fetchWallets(): Promise<WalletType[]> {
   return data;
 }
 
-export async function fetchWalletById({
+export async function fetchWalletByUuid({
   queryKey,
 }: {
   queryKey: [string, string];
@@ -25,7 +25,7 @@ export const createWallet = (data: CreateWalletType): AxiosPromise => {
   return api.post(`/wallets`, data);
 };
 
-export const updateWallet = (data: UpdateWalletType): Promise<WalletType> => {
+export const updateWallet = (data: UpdateWalletType): AxiosPromise => {
   const { uuid, ...fields } = data;
   return api.patch(`/wallets/${uuid}`, fields);
 };
