@@ -2,8 +2,12 @@
 
 import WalletIcon from "@mui/icons-material/Wallet";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import Create from "../Wallet/components/Create/Create";
+import { useCreate } from "../Wallet/components/Create/hooks/useCreate";
 
 export default function Empty() {
+  const { open, handleClickOpen, handleClose } = useCreate({});
+
   return (
     <Container>
       <Box
@@ -28,10 +32,12 @@ export default function Empty() {
 
         <Divider sx={{ marginTop: 3 }} />
 
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Criar Nova Carteira
         </Button>
       </Box>
+
+      <Create open={open} handleClose={handleClose} />
     </Container>
   );
 }

@@ -4,6 +4,7 @@ import {
   UpdateWalletType,
   WalletType,
 } from "@/types/Wallets.types";
+import { AxiosPromise } from "axios";
 
 export async function fetchWallets(): Promise<WalletType[]> {
   const { data } = await api.get(`/wallets`);
@@ -20,9 +21,7 @@ export async function fetchWalletById({
   return data;
 }
 
-export const createWallet = (
-  data: CreateWalletType
-): Promise<{ message: string }> => {
+export const createWallet = (data: CreateWalletType): AxiosPromise => {
   return api.post(`/wallets`, data);
 };
 

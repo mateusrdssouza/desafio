@@ -2,11 +2,14 @@
 
 import { Button, Container, Grid2 } from "@mui/material";
 import Empty from "./components/Empty/Empty";
+import Create from "./components/Wallet/components/Create/Create";
+import { useCreate } from "./components/Wallet/components/Create/hooks/useCreate";
 import Wallet from "./components/Wallet/Wallet";
 import { useDashboard } from "./hooks/useDashboard";
 
 export default function Dashboard() {
   const { wallets } = useDashboard();
+  const { open, handleClickOpen, handleClose } = useCreate({});
 
   if (!wallets?.length) return <Empty />;
 
@@ -25,9 +28,11 @@ export default function Dashboard() {
         ))}
       </Grid2>
 
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Criar Nova Carteira
       </Button>
+
+      <Create open={open} handleClose={handleClose} />
     </Container>
   );
 }
