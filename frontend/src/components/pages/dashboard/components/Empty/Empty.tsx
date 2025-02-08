@@ -33,7 +33,7 @@ export default function Empty() {
         <Divider sx={{ marginTop: 3 }} />
 
         <Button variant="contained" color="primary" onClick={handleClickOpen}>
-          Criar Nova Carteira
+          Criar nova carteira
         </Button>
       </Box>
 

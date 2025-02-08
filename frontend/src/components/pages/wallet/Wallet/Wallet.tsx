@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Delete from "./components/Delete/Delete";
 import { useDelete } from "./components/Delete/hooks/useDelete";
+import Empty from "./components/Empty/Empty";
 import Investment from "./components/Investment/Investment";
 import { useUpdate } from "./components/Update/hooks/useUpdate";
 import Update from "./components/Update/Update";
@@ -75,23 +76,23 @@ export default function Wallet() {
           </Button>
         </Box>
 
-        {wallet.investments?.length && (
-          <>
-            <Divider />
+        <Divider />
 
-            <Grid2
-              container
-              spacing={{ xs: 2, md: 3 }}
-              columns={{ xs: 4, sm: 8, md: 12 }}
-              marginTop={2}
-            >
-              {wallet.investments.map((investment, index) => (
-                <Grid2 key={index} size={{ xs: 4, sm: 6, md: 6 }}>
-                  <Investment data={investment} key={index} />
-                </Grid2>
-              ))}
-            </Grid2>
-          </>
+        {wallet.investments?.length ? (
+          <Grid2
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            marginTop={2}
+          >
+            {wallet.investments.map((investment, index) => (
+              <Grid2 key={index} size={{ xs: 4, sm: 6, md: 6 }}>
+                <Investment data={investment} key={index} />
+              </Grid2>
+            ))}
+          </Grid2>
+        ) : (
+          <Empty />
         )}
       </Paper>
 

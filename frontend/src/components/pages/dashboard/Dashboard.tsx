@@ -29,7 +29,7 @@ export default function Dashboard() {
       </Grid2>
 
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Criar Nova Carteira
+        Criar nova carteira
       </Button>
 
       <Create open={open} handleClose={handleClose} />
