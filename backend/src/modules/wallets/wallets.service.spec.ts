@@ -1,5 +1,6 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersRepository } from 'src/repositories/users-repository';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { WalletsService } from './wallets.service';
 
@@ -13,6 +14,11 @@ describe('WalletsService', () => {
     findByUuid: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+  };
+
+  const mockUsersRepository = {
+    findByUuid: jest.fn(),
+    update: jest.fn(),
   };
 
   const mockUser = {
@@ -31,6 +37,7 @@ describe('WalletsService', () => {
       providers: [
         WalletsService,
         { provide: WalletsRepository, useValue: mockWalletsRepository },
+        { provide: UsersRepository, useValue: mockUsersRepository },
       ],
     }).compile();
 
@@ -106,13 +113,14 @@ describe('WalletsService', () => {
   });
 
   describe('delete', () => {
-    it('should delete an existing wallet', async () => {
+    it('should delete an existing wallet and update user balance', async () => {
       const uuid = 'wallet-uuid';
       const deletedWallet = { uuid, name: 'My Wallet', balance: 0 };
+      const updatedUser = { ...mockUser, balance: 1000 };
 
-      mockWalletsRepository.findByUuid.mockResolvedValue({
-        uuid: mockUser.uuid,
-      });
+      mockWalletsRepository.findByUuid.mockResolvedValue(deletedWallet);
+      mockUsersRepository.findByUuid.mockResolvedValue(mockUser);
+      mockUsersRepository.update.mockResolvedValue(updatedUser);
       mockWalletsRepository.delete.mockResolvedValue(deletedWallet);
 
       const result = await service.delete(mockUser, uuid);
@@ -122,12 +130,28 @@ describe('WalletsService', () => {
         mockUser.uuid,
         uuid,
       );
+      expect(mockUsersRepository.update).toHaveBeenCalledWith(mockUser.uuid, {
+        balance: 1000,
+      });
     });
 
     it('should throw NotFoundException if wallet does not exist during deletion', async () => {
       const uuid = 'non-existent-uuid';
 
       mockWalletsRepository.findByUuid.mockResolvedValue(null);
+
+      await expect(service.delete(mockUser, uuid)).rejects.toThrowError(
+        NotFoundException,
+      );
+    });
+
+    it('should throw NotFoundException if user does not exist during deletion', async () => {
+      const uuid = 'wallet-uuid';
+
+      mockWalletsRepository.findByUuid.mockResolvedValue({
+        uuid: 'wallet-uuid',
+      });
+      mockUsersRepository.findByUuid.mockResolvedValue(null);
 
       await expect(service.delete(mockUser, uuid)).rejects.toThrowError(
         NotFoundException,

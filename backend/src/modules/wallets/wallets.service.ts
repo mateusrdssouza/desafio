@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { UsersRepository } from 'src/repositories/users-repository';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { User } from '../users/entities/user.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
@@ -11,7 +12,10 @@ import { Wallet } from './entities/wallet.entity';
 
 @Injectable()
 export class WalletsService {
-  constructor(private readonly walletsRepository: WalletsRepository) {}
+  constructor(
+    private readonly walletsRepository: WalletsRepository,
+    private readonly usersRepository: UsersRepository,
+  ) {}
 
   async create(user: User, data: CreateWalletDto): Promise<Wallet> {
     try {
@@ -86,6 +90,16 @@ export class WalletsService {
       if (!wallet) {
         throw new NotFoundException('Carteira não encontrada');
       }
+
+      const search = await this.usersRepository.findByUuid(user.uuid);
+
+      if (!search) {
+        throw new NotFoundException('Usuário não encontrado');
+      }
+
+      const balance = search.balance + wallet.balance;
+
+      await this.usersRepository.update(user.uuid, { balance });
 
       return await this.walletsRepository.delete(user.uuid, uuid);
     } catch (error) {

@@ -48,6 +48,11 @@ export class PrismaWalletsRepository implements WalletsRepository {
   }
 
   async delete(userUuid: string, uuid: string): Promise<Wallet> {
+    await this.prismaService.investment.updateMany({
+      where: { wallet: { uuid } },
+      data: { deletedAt: new Date() },
+    });
+
     return await this.prismaService.wallet.update({
       where: { uuid, user: { uuid: userUuid }, deletedAt: null },
       data: { deletedAt: new Date() },
