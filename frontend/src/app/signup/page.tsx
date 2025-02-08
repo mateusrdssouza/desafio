@@ -1,4 +1,4 @@
-import PageTitle from "@/components/layouts/PageTitle";
+import PageTitle from "@/components/layouts/PageTitle/PageTitle";
 import Signup from "@/components/pages/signup/Signup";
 
 export default function Page() {
