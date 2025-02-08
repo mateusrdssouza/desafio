@@ -1,4 +1,4 @@
-import { fetchMe } from "@/services/http/user";
+import { fetchMe } from "@/services/http/users";
 import { useQuery } from "@tanstack/react-query";
 import { parseCookies } from "nookies";
 
