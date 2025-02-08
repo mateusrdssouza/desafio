@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosHeaders } from "axios";
 import Router from "next/router";
-import { parseCookies, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 export const setupAPIClient = () => {
   const api = axios.create({
@@ -38,6 +38,10 @@ export const setupToken = (token: string) => {
     path: "/",
     sameSite: "strict",
   });
+};
+
+export const removeToken = () => {
+  destroyCookie(undefined, "backend.token", { path: "/" });
 };
 
 export const api = setupAPIClient();

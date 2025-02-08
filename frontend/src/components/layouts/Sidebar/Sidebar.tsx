@@ -5,7 +5,7 @@ import { blue, grey } from "@mui/material/colors";
 import { useSidebar } from "./hooks/useSidebar";
 
 export default function Sidebar() {
-  const { name, email, balance } = useSidebar();
+  const { balance, email, name, handleLogout } = useSidebar();
 
   return (
     <Drawer
@@ -67,7 +67,9 @@ export default function Sidebar() {
         </Typography>
 
         <Box sx={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
-          <Button variant="contained">Sair</Button>
+          <Button variant="contained" onClick={handleLogout}>
+            Sair
+          </Button>
         </Box>
       </Box>
     </Drawer>
