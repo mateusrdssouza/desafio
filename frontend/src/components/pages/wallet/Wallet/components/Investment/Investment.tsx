@@ -2,33 +2,44 @@
 
 import { InvestmentType } from "@/types/Investment.types";
 import { moneyFormat } from "@/utils/format";
-import { Alert, Box, Paper, Typography } from "@mui/material";
+import { Alert, Box, Button, Paper, Typography } from "@mui/material";
 import { MarketRiskAlert, MarketRiskDescription } from "./Investment.types";
+import Redeem from "./components/Redeem/Redeem";
+import { useRedeem } from "./components/Redeem/hooks/useRedeem";
 
 interface InvestmentProps {
   data: InvestmentType;
 }
 
 export default function Investment({ data }: InvestmentProps) {
+  const { open, handleClickOpen, handleClose } = useRedeem({
+    uuid: data.uuid,
+  });
+
   return (
     <Paper
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "start",
         padding: 1,
         gap: 2,
       }}
     >
-      <img
-        srcSet={data.company.logoUrl}
-        src={data.company.logoUrl}
-        alt={data.company.name}
-        style={{
-          height: 50,
-          padding: 8,
-        }}
-      />
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <img
+          srcSet={data.company.logoUrl}
+          src={data.company.logoUrl}
+          alt={data.company.name}
+          style={{
+            height: 50,
+            padding: 8,
+          }}
+        />
+
+        <Button variant="text" size="medium" onClick={handleClickOpen}>
+          Resgatar
+        </Button>
+      </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Typography variant="body1" component="div">
@@ -59,6 +70,8 @@ export default function Investment({ data }: InvestmentProps) {
           </Alert>
         </Box>
       </Box>
+
+      <Redeem uuid={data.uuid} open={open} handleClose={handleClose} />
     </Paper>
   );
 }

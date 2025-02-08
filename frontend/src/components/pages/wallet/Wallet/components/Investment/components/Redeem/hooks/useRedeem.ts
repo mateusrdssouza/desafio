@@ -1,48 +1,48 @@
 "use client";
 
-import { deleteWallet } from "@/services/http/wallets";
+import { redeemInvestment } from "@/services/http/investments";
 import { queryClient } from "@/services/queryClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { DeleteWalletSchema, DeleteWalletSchemaType } from "../Delete.schema";
+import {
+  RedeemInvestmentSchema,
+  RedeemInvestmentSchemaType,
+} from "../Redeem.schema";
 
-interface useDeleteProps {
+interface useRedeemProps {
   uuid?: string;
   close?: () => void;
 }
 
-export function useDelete({ uuid, close }: useDeleteProps) {
+export function useRedeem({ uuid, close }: useRedeemProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<DeleteWalletSchemaType>({
-    resolver: zodResolver(DeleteWalletSchema),
+  } = useForm<RedeemInvestmentSchemaType>({
+    resolver: zodResolver(RedeemInvestmentSchema),
     defaultValues: {
       uuid,
     },
   });
 
-  async function onSubmit(data: DeleteWalletSchemaType) {
+  async function onSubmit(data: RedeemInvestmentSchemaType) {
     setLoading(true);
 
-    await deleteWallet(data.uuid)
+    await redeemInvestment(data.uuid)
       .then(response => {
         toast.success(response?.data?.message || "Sucesso");
         queryClient.invalidateQueries({ queryKey: ["/users", "/me"] });
         queryClient.invalidateQueries({ queryKey: ["/wallets"] });
         queryClient.invalidateQueries({ queryKey: ["/wallet", uuid] });
         if (close) close();
-        router.push("/dashboard");
+        window.location.reload();
       })
       .catch(error => {
         if (error instanceof AxiosError) {
