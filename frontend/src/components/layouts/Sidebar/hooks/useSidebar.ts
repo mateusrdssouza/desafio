@@ -2,7 +2,7 @@
 
 import { useFetchMe } from "@/queries/users";
 import { removeToken } from "@/services/apiClient";
-import { moneyFormat } from "@/utils/format";
+import { getInitials, moneyFormat } from "@/utils/format";
 import { useRouter } from "next/navigation";
 
 export function useSidebar() {
@@ -17,10 +17,13 @@ export function useSidebar() {
     router.push("/signin");
   }
 
+  const initials = getInitials(user?.name || "");
+
   return {
     balance,
     email: user?.email,
     name: user?.name,
+    initials,
     handleLogout,
   };
 }

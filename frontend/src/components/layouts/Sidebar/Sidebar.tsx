@@ -5,7 +5,7 @@ import { blue, grey } from "@mui/material/colors";
 import { useSidebar } from "./hooks/useSidebar";
 
 export default function Sidebar() {
-  const { balance, email, name, handleLogout } = useSidebar();
+  const { balance, email, name, initials, handleLogout } = useSidebar();
 
   return (
     <Drawer
@@ -42,9 +42,9 @@ export default function Sidebar() {
             fontSize: 40,
             bgcolor: blue[500],
           }}
-          alt="Mateus Rodrigues de Souza"
+          alt={name}
         >
-          MR
+          {initials}
         </Avatar>
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
