@@ -1,5 +1,6 @@
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersService } from '../users/users.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -13,6 +14,15 @@ describe('AuthController', () => {
     password: 'password123',
   };
 
+  const mockUsersService = {
+    findByEmail: jest.fn().mockResolvedValue({
+      uuid: '1',
+      name: 'Test User',
+      email: 'testuser@example.com',
+      password: 'password123',
+    }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
@@ -24,6 +34,10 @@ describe('AuthController', () => {
               .fn()
               .mockResolvedValue({ access_token: 'access_token' }),
           },
+        },
+        {
+          provide: UsersService,
+          useValue: mockUsersService,
         },
       ],
     }).compile();
