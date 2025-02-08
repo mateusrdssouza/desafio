@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -47,12 +46,6 @@ export class WalletsService {
         throw new NotFoundException('Carteira não encontrada');
       }
 
-      if (wallet.uuid !== user.uuid) {
-        throw new BadRequestException(
-          'Você não tem permissão para acessar esta carteira',
-        );
-      }
-
       return wallet;
     } catch (error) {
       throw error;
@@ -69,12 +62,6 @@ export class WalletsService {
 
       if (!wallet) {
         throw new NotFoundException('Carteira não encontrada');
-      }
-
-      if (wallet.uuid !== user.uuid) {
-        throw new BadRequestException(
-          'Você não tem permissão para atualizar esta carteira',
-        );
       }
 
       const walletByName = await this.walletsRepository.findByName(
@@ -98,12 +85,6 @@ export class WalletsService {
 
       if (!wallet) {
         throw new NotFoundException('Carteira não encontrada');
-      }
-
-      if (wallet.uuid !== user.uuid) {
-        throw new BadRequestException(
-          'Você não tem permissão para excluir esta carteira',
-        );
       }
 
       return await this.walletsRepository.delete(user.uuid, uuid);

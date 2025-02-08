@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  ConflictException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { WalletsRepository } from 'src/repositories/wallets-repository';
 import { WalletsService } from './wallets.service';
@@ -107,23 +103,6 @@ describe('WalletsService', () => {
         service.update(mockUser, uuid, updateDto),
       ).rejects.toThrowError(NotFoundException);
     });
-
-    it('should throw BadRequestException if wallet does not belong to the user during update', async () => {
-      const uuid = 'wallet-uuid';
-      const updateDto = { name: 'Updated Wallet' };
-
-      mockWalletsRepository.findByUuid.mockResolvedValue({
-        uuid: 'other-user-uuid',
-      });
-
-      await expect(
-        service.update(mockUser, uuid, updateDto),
-      ).rejects.toThrowError(
-        new BadRequestException(
-          'Você não tem permissão para atualizar esta carteira',
-        ),
-      );
-    });
   });
 
   describe('delete', () => {
@@ -152,20 +131,6 @@ describe('WalletsService', () => {
 
       await expect(service.delete(mockUser, uuid)).rejects.toThrowError(
         NotFoundException,
-      );
-    });
-
-    it('should throw BadRequestException if wallet does not belong to the user during deletion', async () => {
-      const uuid = 'wallet-uuid';
-
-      mockWalletsRepository.findByUuid.mockResolvedValue({
-        uuid: 'other-user-uuid',
-      });
-
-      await expect(service.delete(mockUser, uuid)).rejects.toThrowError(
-        new BadRequestException(
-          'Você não tem permissão para excluir esta carteira',
-        ),
       );
     });
   });
