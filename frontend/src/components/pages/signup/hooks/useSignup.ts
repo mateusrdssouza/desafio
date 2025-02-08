@@ -1,6 +1,6 @@
 "use client";
 
-import { api, setupToken } from "@/services/apiClient";
+import { api } from "@/services/apiClient";
 import { queryClient } from "@/services/queryClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 import { KeyboardEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { SigninSchema, SigninSchemaType } from "../Signin.schema";
+import { SignupSchema, SignupSchemaType } from "../Signup.schema";
 
-export function useSignin() {
+export function useSignup() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -19,18 +19,19 @@ export function useSignin() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SigninSchemaType>({
-    resolver: zodResolver(SigninSchema),
+  } = useForm<SignupSchemaType>({
+    resolver: zodResolver(SignupSchema),
   });
 
-  async function onSubmit(data: SigninSchemaType) {
+  async function onSubmit(data: SignupSchemaType) {
     setLoading(true);
     queryClient.clear();
 
     try {
       const response = await api.post(
-        "/auth/login",
+        "/users",
         {
+          name: data.name,
           email: data.email,
           password: data.password,
         },
@@ -41,10 +42,9 @@ export function useSignin() {
         }
       );
 
-      const { access_token } = response.data;
-      setupToken(access_token);
+      toast.success(response.data?.message || "Cadastro realizado com sucesso");
 
-      router.push("/dashboard");
+      router.push("/signin");
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data?.message || "Ocorreu um erro");

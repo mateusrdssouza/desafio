@@ -8,9 +8,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useSignin } from "./hooks/useSignin";
+import { useSignup } from "./hooks/useSignup";
 
-export default function Signin() {
+export default function Signup() {
   const {
     errors,
     isSubmitting,
@@ -19,7 +19,7 @@ export default function Signin() {
     handleSubmit,
     onSubmit,
     register,
-  } = useSignin();
+  } = useSignup();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -35,10 +35,24 @@ export default function Signin() {
         }}
       >
         <Typography variant="h5" gutterBottom>
-          Login
+          Cadastro
         </Typography>
 
-        <form id="signin" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form id="signup" onSubmit={handleSubmit(onSubmit)} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            id="name"
+            label="Nome"
+            type="text"
+            fullWidth
+            autoFocus
+            onKeyDown={handleKeyDown}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+            {...register("name")}
+          />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -75,13 +89,13 @@ export default function Signin() {
             sx={{ mt: 3, mb: 2 }}
             fullWidth
           >
-            {isSubmitting || loading ? "Entrando..." : "Entrar"}
+            {isSubmitting || loading ? "Cadastrando..." : "Cadastrar"}
           </Button>
         </form>
 
         <Box display={"flex"} alignSelf={"start"} marginTop={1}>
           <Typography fontSize={14}>
-            Não tem conta? <Link href="/signup">Clique aqui</Link>
+            Já tem conta? <Link href="/signin">Clique aqui</Link>
           </Typography>
         </Box>
       </Box>

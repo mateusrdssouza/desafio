@@ -1,11 +1,11 @@
 import PageTitle from "@/components/layouts/PageTitle";
-import Signin from "@/components/pages/signin/Signin";
+import Signup from "@/components/pages/signup/Signup";
 
 export default function Page() {
   return (
     <>
-      <PageTitle title="Signin" />
-      <Signin />
+      <PageTitle title="Signup" />
+      <Signup />
     </>
   );
 }
