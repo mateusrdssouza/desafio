@@ -34,9 +34,11 @@ export default function Signup() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Cadastro
-        </Typography>
+        <img
+          src="logo.png"
+          alt="logo"
+          style={{ height: 90, marginTop: 10, marginBottom: 10 }}
+        />
 
         <form id="signup" onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextField

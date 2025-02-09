@@ -34,9 +34,11 @@ export default function Signin() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Login
-        </Typography>
+        <img
+          src="logo.png"
+          alt="logo"
+          style={{ height: 90, marginTop: 10, marginBottom: 10 }}
+        />
 
         <form id="signin" onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextField
