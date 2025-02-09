@@ -1,11 +1,9 @@
-import PageTitle from "@/components/layouts/PageTitle/PageTitle";
 import Wallet from "@/components/pages/wallet/Wallet/Wallet";
 
+export const metadata = {
+  title: "Carteira",
+};
+
 export default function Page() {
-  return (
-    <>
-      <PageTitle title="Carteira" />
-      <Wallet />
-    </>
-  );
+  return <Wallet />;
 }
