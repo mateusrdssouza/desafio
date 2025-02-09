@@ -24,6 +24,12 @@
 
 <br />
 
+## <img src="https://cdn.worldvectorlogo.com/logos/docker-3.svg" width="140" />
+
+**Docker** é uma plataforma de contêinerização de software que permite criar, distribuir e executar aplicações de maneira isolada e portátil. A escolha do Docker foi para utilizar a tecnologia de contêineres no desenvolvimento da aplicação em um ambiente isolado e para facilitar a instalação de dependências.
+
+<br />
+
 ## Documentação da API (Postman)
 
 - ##### [Endpoints](postman/desafio.postman_collection.json)
