@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { InvestmentsModule } from './modules/investments/investments.module';
 import { UsersModule } from './modules/users/users.module';
 import { WalletsModule } from './modules/wallets/wallets.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, WalletsModule, InvestmentsModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UsersModule,
+    WalletsModule,
+    InvestmentsModule,
+  ],
   controllers: [],
   providers: [],
 })
