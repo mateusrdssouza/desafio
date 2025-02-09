@@ -6,6 +6,12 @@
 
 <br />
 
+## <img src="https://wiki.postgresql.org/images/a/a4/PostgreSQL_logo.3colors.svg" width="70" />
+
+**PostgreSQL** é um sistema gerenciador de banco de dados relacional de código aberto, amplamente reconhecido pela sua robustez, confiabilidade e desempenho. A escolha do PostgreSQL se deu pela sua excelente integração com o Prisma, que facilita a interação com o banco de dados de forma eficiente e intuitiva, permitindo uma gestão simplificada de dados e migrações.
+
+<br />
+
 ## <img src="https://cdn.freelogovectors.net/wp-content/uploads/2022/01/prisma_logo-freelogovectors.net_.png" width="70" />
 
 **Prisma** é uma ferramenta moderna e poderosa para acesso a bancos de dados em Node.js e TypeScript. A escolha do Prisma foi motivada pela facilidade de criar comandos SQL e pela integração simples com as models/entities do sistema.
