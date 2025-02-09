@@ -2,7 +2,6 @@ export interface CreateInvestmentType {
   walletUuid: string;
   companyUuid: string;
   shares: number;
-  amount: number;
 }
 
 export interface CompanyType {

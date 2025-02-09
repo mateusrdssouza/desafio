@@ -20,7 +20,7 @@ export default function Empty() {
           height: "100vh",
         }}
       >
-        <WalletIcon sx={{ fontSize: 120 }} />
+        <WalletIcon sx={{ fontSize: 120, marginBottom: 4 }} />
 
         <Typography variant="h6" gutterBottom>
           Você ainda não tem nenhuma carteira de investimento

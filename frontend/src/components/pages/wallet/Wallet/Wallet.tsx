@@ -14,6 +14,8 @@ import {
 import Delete from "./components/Delete/Delete";
 import { useDelete } from "./components/Delete/hooks/useDelete";
 import Empty from "./components/Empty/Empty";
+import { useInvest } from "./components/Investment/components/Invest/hooks/useInvest";
+import Invest from "./components/Investment/components/Invest/Invest";
 import Investment from "./components/Investment/Investment";
 import { useUpdate } from "./components/Update/hooks/useUpdate";
 import Update from "./components/Update/Update";
@@ -37,6 +39,8 @@ export default function Wallet() {
   } = useDelete({
     uuid: wallet?.uuid,
   });
+
+  const { open, handleClickOpen, handleClose } = useInvest({});
 
   if (!wallet) return null;
 
@@ -79,18 +83,31 @@ export default function Wallet() {
         <Divider />
 
         {wallet.investments?.length ? (
-          <Grid2
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-            marginTop={2}
-          >
-            {wallet.investments.map((investment, index) => (
-              <Grid2 key={index} size={{ xs: 4, sm: 6, md: 6 }}>
-                <Investment data={investment} key={index} />
-              </Grid2>
-            ))}
-          </Grid2>
+          <>
+            <Grid2
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+              marginTop={2}
+            >
+              {wallet.investments.map((investment, index) => (
+                <Grid2 key={index} size={{ xs: 4, sm: 6, md: 6 }}>
+                  <Investment data={investment} key={index} />
+                </Grid2>
+              ))}
+            </Grid2>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClickOpen}
+              sx={{ marginTop: 4 }}
+            >
+              Fazer novo investimento
+            </Button>
+
+            <Invest open={open} handleClose={handleClose} />
+          </>
         ) : (
           <Empty />
         )}

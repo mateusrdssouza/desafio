@@ -2,8 +2,12 @@
 
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import { useInvest } from "../Investment/components/Invest/hooks/useInvest";
+import Invest from "../Investment/components/Invest/Invest";
 
 export default function Empty() {
+  const { open, handleClickOpen, handleClose } = useInvest({});
+
   return (
     <Container>
       <Box
@@ -29,10 +33,12 @@ export default function Empty() {
 
         <Divider sx={{ marginTop: 3 }} />
 
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Fazer primeiro investimento
         </Button>
       </Box>
+
+      <Invest open={open} handleClose={handleClose} />
     </Container>
   );
 }
