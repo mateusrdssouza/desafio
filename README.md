@@ -4,47 +4,69 @@
 
 #### Acessar a pasta do projeto
 
-`/desafio`
+```bash
+$ cd desafio
+```
 
 #### Criar o arquivo .env do backend
 
-`cp backend/.env.example backend/.env`
+```bash
+$ cp backend/.env.example backend/.env
+```
 
 #### Instalar as dependências do backend
 
-`npm install --prefix ./backend`
+```bash
+$ npm install --prefix ./backend
+```
 
 #### Criar o arquivo .env do frontend
 
-`cp frontend/.env.example frontend/.env`
+```bash
+$ cp frontend/.env.example frontend/.env
+```
 
 #### Instalar as dependências do frontend
 
-`npm install --prefix ./frontend`
+```bash
+$ npm install --prefix ./frontend
+```
 
 #### Executar o build do frontend
 
-`npm run build --prefix ./frontend`
+```bash
+$ npm run build --prefix ./frontend
+```
 
 #### Construir as imagens do projeto
 
-`docker-compose build`
+```bash
+$ docker-compose build
+```
 
 #### Iniciar os containers do projeto
 
-`docker-compose up`
+```bash
+$ docker-compose up
+```
 
 #### Acessar o container do backend
 
-`docker exec -it backend sh`
+```bash
+$ docker exec -it backend sh
+```
 
 #### Executar as migrations para criar as tabelas no banco
 
-`npm run prisma:migrate`
+```bash
+# npm run prisma:migrate
+```
 
 #### Executar os seeders para popular as tabelas
 
-`npm run prisma:seed`
+```bash
+# npm run prisma:seed
+```
 
 #### Acessar o sistema
 
