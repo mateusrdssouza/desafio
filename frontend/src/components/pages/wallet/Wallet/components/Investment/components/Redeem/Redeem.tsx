@@ -55,10 +55,10 @@ export default function Redeem({ uuid, open, handleClose }: RedeemProps) {
             <Button
               type="submit"
               variant="contained"
-              color="error"
+              color="success"
               disabled={isSubmitting || loading}
             >
-              Excluir
+              Resgatar
             </Button>
           </DialogActions>
         </form>

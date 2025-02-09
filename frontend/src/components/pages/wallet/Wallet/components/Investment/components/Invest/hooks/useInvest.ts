@@ -29,6 +29,7 @@ export function useInvest({ close }: useCreateProps) {
   const { companies } = useFetchCompanies();
 
   const {
+    reset,
     watch,
     register,
     handleSubmit,
@@ -52,6 +53,7 @@ export function useInvest({ close }: useCreateProps) {
         queryClient.invalidateQueries({ queryKey: ["/wallets"] });
         queryClient.invalidateQueries({ queryKey: ["/wallet", uuid] });
         if (close) close();
+        reset();
       })
       .catch(error => {
         if (error instanceof AxiosError) {

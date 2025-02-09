@@ -11,6 +11,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import Delete from "./components/Delete/Delete";
 import { useDelete } from "./components/Delete/hooks/useDelete";
 import Empty from "./components/Empty/Empty";
@@ -22,6 +23,8 @@ import Update from "./components/Update/Update";
 import { useWallet } from "./hooks/useWallet";
 
 export default function Wallet() {
+  const router = useRouter();
+
   const { wallet } = useWallet();
 
   const {
@@ -97,14 +100,31 @@ export default function Wallet() {
               ))}
             </Grid2>
 
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleClickOpen}
-              sx={{ marginTop: 4 }}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "end",
+                gap: 4,
+              }}
             >
-              Fazer novo investimento
-            </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => router.push("/dashboard")}
+              >
+                Voltar
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClickOpen}
+                sx={{ marginTop: 4 }}
+              >
+                Fazer novo investimento
+              </Button>
+            </Box>
 
             <Invest open={open} handleClose={handleClose} />
           </>

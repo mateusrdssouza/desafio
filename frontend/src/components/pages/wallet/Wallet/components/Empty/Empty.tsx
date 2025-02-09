@@ -2,11 +2,14 @@
 
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useInvest } from "../Investment/components/Invest/hooks/useInvest";
 import Invest from "../Investment/components/Invest/Invest";
 
 export default function Empty() {
   const { open, handleClickOpen, handleClose } = useInvest({});
+
+  const router = useRouter();
 
   return (
     <Container>
@@ -33,9 +36,19 @@ export default function Empty() {
 
         <Divider sx={{ marginTop: 3 }} />
 
-        <Button variant="contained" color="primary" onClick={handleClickOpen}>
-          Fazer primeiro investimento
-        </Button>
+        <Box sx={{ display: "flex", gap: 4 }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => router.push("/dashboard")}
+          >
+            Voltar
+          </Button>
+
+          <Button variant="contained" color="primary" onClick={handleClickOpen}>
+            Fazer primeiro investimento
+          </Button>
+        </Box>
       </Box>
 
       <Invest open={open} handleClose={handleClose} />
