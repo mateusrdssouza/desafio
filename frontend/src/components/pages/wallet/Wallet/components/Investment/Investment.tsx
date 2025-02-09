@@ -27,14 +27,21 @@ export default function Investment({ data }: InvestmentProps) {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Image
-          src={data.company.logoUrl}
-          alt={data.company.name}
+        <Box
           style={{
-            height: 50,
-            padding: 8,
+            position: "relative",
+            width: "100%",
+            height: "50px",
           }}
-        />
+        >
+          <Image
+            src={data.company.logoUrl}
+            alt={data.company.name}
+            layout="fill"
+            objectFit="contain"
+            style={{ padding: 8 }}
+          />
+        </Box>
 
         <Button variant="text" size="medium" onClick={handleClickOpen}>
           Resgatar

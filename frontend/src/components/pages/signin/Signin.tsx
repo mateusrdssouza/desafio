@@ -35,12 +35,15 @@ export default function Signin() {
           borderRadius: 2,
         }}
       >
-        <Image
-          src="logo.png"
-          alt="logo"
-          height={90}
-          style={{ marginBottom: 10 }}
-        />
+        <Box style={{ position: "relative", width: "100%", height: "90px" }}>
+          <Image
+            src="/logo.png"
+            alt="logo"
+            layout="fill"
+            objectFit="contain"
+            style={{ marginBottom: 10 }}
+          />
+        </Box>
 
         <form id="signin" onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextField

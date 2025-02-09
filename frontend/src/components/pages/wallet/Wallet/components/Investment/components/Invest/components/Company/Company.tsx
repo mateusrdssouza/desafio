@@ -22,14 +22,20 @@ export default function Company({ company }: EmptyProps) {
         border: `1px solid ${grey[300]}`,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "start",
+          position: "relative",
+          height: "50px",
+        }}
+      >
         <Image
           src={company.logoUrl}
           alt={company.name}
-          style={{
-            height: 50,
-            padding: 8,
-          }}
+          layout="fill"
+          objectFit="contain"
+          style={{ padding: 8 }}
         />
       </Box>
 
