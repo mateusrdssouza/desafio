@@ -22,13 +22,6 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
     });
   }
 
-  async findAllCompanies(): Promise<Company[]> {
-    return await this.prismaService.company.findMany({
-      where: { deletedAt: null },
-      orderBy: { name: 'asc' },
-    });
-  }
-
   async findByUuid(userUuid: string, uuid: string): Promise<Investment | null> {
     return await this.prismaService.investment.findFirst({
       where: { uuid, wallet: { user: { uuid: userUuid } }, deletedAt: null },
@@ -46,6 +39,19 @@ export class PrismaInvestmentsRepository implements InvestmentsRepository {
         company: { uuid: companyUuid },
         deletedAt: null,
       },
+    });
+  }
+
+  async findCompanyByUuid(uuid: string): Promise<Company | null> {
+    return await this.prismaService.company.findFirst({
+      where: { uuid, deletedAt: null },
+    });
+  }
+
+  async findAllCompanies(): Promise<Company[]> {
+    return await this.prismaService.company.findMany({
+      where: { deletedAt: null },
+      orderBy: { name: 'asc' },
     });
   }
 

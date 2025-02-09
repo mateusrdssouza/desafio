@@ -43,11 +43,21 @@ export class InvestmentsService {
         throw new NotFoundException('Carteira não encontrada');
       }
 
+      const company = await this.investmentsRepository.findCompanyByUuid(
+        data.companyUuid,
+      );
+
+      if (!company) {
+        throw new NotFoundException('Empresa não encontrada');
+      }
+
       const search = await this.usersRepository.findByUuid(user.uuid);
 
       if (!search) {
         throw new NotFoundException('Usuário não encontrado');
       }
+
+      data.amount = data.shares * company.stockPrice;
 
       if (data.amount > search.balance) {
         throw new ConflictException('Saldo insuficiente');

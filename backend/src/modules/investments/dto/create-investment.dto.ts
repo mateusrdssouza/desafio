@@ -1,4 +1,10 @@
-import { IsInt, IsNotEmpty, IsPositive, IsUUID } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsPositive,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateInvestmentDto {
   @IsNotEmpty({ message: 'Selecione uma carteira' })
@@ -14,7 +20,7 @@ export class CreateInvestmentDto {
   @IsPositive({ message: 'Informe uma quantidade válida' })
   shares: number;
 
-  @IsNotEmpty({ message: 'Informe o valor das ações' })
+  @IsOptional()
   @IsInt({ message: 'Informe um valor válido' })
   @IsPositive({ message: 'Informe um valor válido' })
   amount: number;

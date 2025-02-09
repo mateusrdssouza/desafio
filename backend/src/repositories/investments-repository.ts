@@ -5,7 +5,6 @@ import { Investment } from 'src/modules/investments/entities/investment.entity';
 
 export abstract class InvestmentsRepository {
   abstract create(data: CreateInvestmentDto): Promise<Investment>;
-  abstract findAllCompanies(): Promise<Company[]>;
   abstract findByUuid(
     userUuid: string,
     uuid: string,
@@ -14,6 +13,8 @@ export abstract class InvestmentsRepository {
     walletUuid: string,
     companyUuid: string,
   ): Promise<Investment | null>;
+  abstract findCompanyByUuid(uuid: string): Promise<Company | null>;
+  abstract findAllCompanies(): Promise<Company[]>;
   abstract update(uuid: string, data: UpdateInvestmentDto): Promise<Investment>;
   abstract delete(userUuid: string, uuid: string): Promise<Investment>;
 }
