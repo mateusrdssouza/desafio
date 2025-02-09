@@ -71,3 +71,9 @@ $ docker exec -it backend sh
 #### Acessar o sistema
 
 - ##### [http://localhost:3001/](http://localhost:3001/)
+
+#### Documentação
+
+- ##### [Backend](backend/README.md)
+
+- ##### [Frontend](frontend/README.md)
