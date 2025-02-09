@@ -3,6 +3,7 @@
 import { InvestmentType } from "@/types/Investment.types";
 import { moneyFormat } from "@/utils/format";
 import { Alert, Box, Button, Paper, Typography } from "@mui/material";
+import Image from "next/image";
 import { MarketRiskAlert, MarketRiskDescription } from "./Investment.types";
 import Redeem from "./components/Redeem/Redeem";
 import { useRedeem } from "./components/Redeem/hooks/useRedeem";
@@ -26,8 +27,7 @@ export default function Investment({ data }: InvestmentProps) {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <img
-          srcSet={data.company.logoUrl}
+        <Image
           src={data.company.logoUrl}
           alt={data.company.name}
           style={{

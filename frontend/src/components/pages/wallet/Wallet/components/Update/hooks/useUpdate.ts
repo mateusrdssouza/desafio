@@ -30,23 +30,22 @@ export function useUpdate({ uuid, close }: useUpdateProps) {
   async function onSubmit(data: UpdateWalletSchemaType) {
     setLoading(true);
 
-    uuid &&
-      (await updateWallet({ uuid, ...data })
-        .then(response => {
-          toast.success(response?.data?.message || "Sucesso");
-          queryClient.invalidateQueries({ queryKey: ["/wallets"] });
-          queryClient.invalidateQueries({ queryKey: ["/wallet", uuid] });
-          if (close) close();
-          reset();
-        })
-        .catch(error => {
-          if (error instanceof AxiosError) {
-            toast.error(error.response?.data?.message || "Ocorreu um erro");
-          }
-        })
-        .finally(() => {
-          setLoading(false);
-        }));
+    await updateWallet({ uuid: String(uuid), ...data })
+      .then(response => {
+        toast.success(response?.data?.message || "Sucesso");
+        queryClient.invalidateQueries({ queryKey: ["/wallets"] });
+        queryClient.invalidateQueries({ queryKey: ["/wallet", uuid] });
+        if (close) close();
+        reset();
+      })
+      .catch(error => {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data?.message || "Ocorreu um erro");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   const handleClickOpen = () => {

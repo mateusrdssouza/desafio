@@ -67,7 +67,7 @@ export function useInvest({ close }: useCreateProps) {
 
   useEffect(() => {
     setCompany(companies?.find(c => c.uuid === companyUuid));
-  }, [companyUuid]);
+  }, [companies, companyUuid]);
 
   const handleClickOpen = () => {
     setOpen(true);

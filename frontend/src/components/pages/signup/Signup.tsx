@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
 import { useSignup } from "./hooks/useSignup";
 
 export default function Signup() {
@@ -34,10 +35,11 @@ export default function Signup() {
           borderRadius: 2,
         }}
       >
-        <img
+        <Image
           src="logo.png"
           alt="logo"
-          style={{ height: 90, marginTop: 10, marginBottom: 10 }}
+          height={90}
+          style={{ marginBottom: 10 }}
         />
 
         <form id="signup" onSubmit={handleSubmit(onSubmit)} noValidate>

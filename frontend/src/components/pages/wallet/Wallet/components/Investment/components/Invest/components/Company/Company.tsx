@@ -4,6 +4,7 @@ import { CompanyType } from "@/types/Investment.types";
 import { moneyFormat } from "@/utils/format";
 import { Box, Grid2, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import Image from "next/image";
 import { MarketRiskDescription } from "../../../../Investment.types";
 
 interface EmptyProps {
@@ -22,8 +23,7 @@ export default function Company({ company }: EmptyProps) {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <img
-          srcSet={company.logoUrl}
+        <Image
           src={company.logoUrl}
           alt={company.name}
           style={{

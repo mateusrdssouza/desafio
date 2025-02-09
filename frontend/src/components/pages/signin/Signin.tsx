@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
 import { useSignin } from "./hooks/useSignin";
 
 export default function Signin() {
@@ -34,10 +35,11 @@ export default function Signin() {
           borderRadius: 2,
         }}
       >
-        <img
+        <Image
           src="logo.png"
           alt="logo"
-          style={{ height: 90, marginTop: 10, marginBottom: 10 }}
+          height={90}
+          style={{ marginBottom: 10 }}
         />
 
         <form id="signin" onSubmit={handleSubmit(onSubmit)} noValidate>
