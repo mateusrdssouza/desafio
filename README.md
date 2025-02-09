@@ -70,4 +70,4 @@ $ docker exec -it backend sh
 
 #### Acessar o sistema
 
-##### > [http://localhost:3001/](http://localhost:3001/)
+- ##### [http://localhost:3001/](http://localhost:3001/)
